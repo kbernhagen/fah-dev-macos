@@ -1,0 +1,6 @@
+.DS_Store
+/build
+/etc/scons*options*.py
+/prebuilt
+/run
+/workarea
