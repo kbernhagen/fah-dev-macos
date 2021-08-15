@@ -2,12 +2,6 @@
 # FAH_DEV_ROOT/bin/env.sh
 # for developer manual build
 
-# DO NOT USE JHBUILD
-if [ "$JHBUILD_PROMPT" != "" ]; then
-  echo "Must NOT run under 'jhbuild shell' to get a correct build environment"
-  exit 1
-fi
-
 HERE="$PWD"
 
 if [ ! -f "./env.sh" ]; then
@@ -76,6 +70,11 @@ export OTHER_ROOT_UNIV="$HOME/fah-local-10.7-universal"
 # best to use universal for all targets, unless univ is missing some libs
 export OTHER_ROOT="$OTHER_ROOT_UNIV"
 
+export FREETYPE2_HOME="$OTHER_ROOT"
+export OPENSSL_HOME="$OTHER_ROOT"
+
+export PATH="$FREETYPE2_HOME/bin:$PATH"
+
 export CBANG_HOME="$BUILD_ROOT/cbang"
 export FAH_CLIENT_HOME="$BUILD_ROOT/fah-client"
 export FAH_CLIENT_OSX_INSTALLER_HOME="$BUILD_ROOT/fah-client-osx-installer"
@@ -90,10 +89,5 @@ export FAH_CONTROL_PREBUILT_HOME="$PREBUILT_ROOT/fah-control-prebuilt"
 export FAH_VIEWER_HOME="$BUILD_ROOT/fah-viewer"
 export FAH_WEB_CLIENT_HOME="$BUILD_ROOT/fah-web-client"
 export LIBFAH_HOME="$BUILD_ROOT/libfah"
-
-# this may not be needed
-export FREETYPE2_HOME="$OTHER_ROOT"
-
-export OPENSSL_HOME="$OTHER_ROOT"
 
 fi

@@ -9,6 +9,8 @@ cd "$(dirname "$0")"
 cd ..
 export FAH_DEV_ROOT="$PWD"
 
+# disable pip version warning
+export PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # TODO
 # sanity checks
@@ -131,6 +133,8 @@ echo
 echo "done"
 echo "Note: Do NOT upgrade pip2, despite messages you may see."
 echo "It will become incompatible with python2."
+echo "Ignore deprecation warnings for python 2.7"
+echo
 echo "You might want to append the following to .zprofile"
 echo
 echo "export PY2USERBIN=\"\$HOME/Library/Python/2.7/bin\""
