@@ -40,14 +40,15 @@ scons
 
 echo
 echo ======================== libfah
-cd "$LIBFAH_HOME"
-scons
+cd "$LIBFAH_HOME" && scons || true
 
 echo
 echo ======================== fah-client
-cd "$FAH_CLIENT_HOME"
-scons
-scons package
+cd "$FAH_CLIENT_HOME" && scons && scons package || true
+
+echo
+echo ======================== fah-client-bastet
+cd "$FAH_CLIENT_BASTET_HOME" && scons && scons package || true
 
 echo
 echo ======================== installer
