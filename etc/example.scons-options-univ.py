@@ -10,7 +10,7 @@ ccflags = '-stdlib=libc++ -Wno-unused-local-typedefs'
 linkflags = '-stdlib=libc++'
 
 package_arch = 'universal'
-disable_local = 'libevent re2'
+#disable_local = 'libevent re2'
 
 sign_disable = 1
 sign_keychain = 'login.keychain'
