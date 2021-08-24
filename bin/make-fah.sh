@@ -47,10 +47,6 @@ echo ======================== fah-client
 cd "$FAH_CLIENT_HOME" && scons && scons package || true
 
 echo
-echo ======================== fah-client-bastet
-cd "$FAH_CLIENT_BASTET_HOME" && scons && scons package || true
-
-echo
 echo ======================== installer
 cd "$FAH_CLIENT_OSX_INSTALLER_HOME"
 scons --clean

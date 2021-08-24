@@ -17,6 +17,7 @@ rm -r "$FAH_WEB_CLIENT_HOME"/libfah-web-client-resources.a
 
 cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME" && scons --clean distclean
 cd "$FAH_CLIENT_OSX_INSTALLER_HOME" && scons --clean
+cd "$FAH_CLIENT_BASTET_OSX_INSTALLER_HOME" && scons --clean
 
 #cd "$FAH_CLIENT_VERSION_HOME"; scons --clean # no SConstruct
 rm "$FAH_CLIENT_VERSION_HOME"/config/fah-client-version/__init__.pyc
