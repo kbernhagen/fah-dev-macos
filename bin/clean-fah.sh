@@ -19,7 +19,7 @@ cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME" && scons --clean distclean
 
 # don't delete final dist packages and zip files
 cd "$FAH_CLIENT_OSX_INSTALLER_HOME" && scons --clean
-cd "$FAH_CLIENT_BASTET_OSX_INSTALLER_HOME" && scons --clean
+cd "$FAH_OSX_INSTALLER_HOME" && scons --clean
 
 #cd "$FAH_CLIENT_VERSION_HOME"; scons --clean # no SConstruct
 rm "$FAH_CLIENT_VERSION_HOME"/config/fah-client-version/__init__.pyc

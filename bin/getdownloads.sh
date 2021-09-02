@@ -4,9 +4,7 @@
 
 cd "$(dirname "$0")"
 
-if [ -z "$FAH_DEV_ROOT" ]; then
-  . ./env.sh
-fi
+. ./env.sh
 
 D="$FAH_DEV_ROOT/build"
 mkdir -p "$D"

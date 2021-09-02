@@ -2,9 +2,7 @@
 
 cd "$(dirname "$0")"
 
-if [ -z "$BUILD_ROOT" ]; then
-  . ./env.sh
-fi
+. ./env.sh
 
 mkdir -p "$BUILD_ROOT"
 cd "$BUILD_ROOT"
@@ -60,5 +58,16 @@ git clone https://github.com/FoldingCommunity/fah-viewer.git
 [[ ! -d fah-control-gtk3 ]] && \
 echo && \
 git clone https://github.com/cdberkstresser/fah-control.git fah-control-gtk3
+
+[[ ! -d fah-osx-installer ]] && \
+echo && \
+git clone https://github.com/kbernhagen/fah-osx-installer.git
+
+echo
+echo "Trying to clone other repos...(may be private)"
+
+[[ ! -d fah-client-bastet ]] && \
+echo && \
+git clone https://github.com/FoldingAtHome/fah-client-bastet.git || true
 
 echo

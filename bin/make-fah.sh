@@ -14,43 +14,45 @@ if [ ! -z "$FAH_CONTROL_HOME" ]; then
   cd "$FAH_CONTROL_HOME"
   scons --clean
   # do not stop build if fah-control build fails
-  scons package || scons --clean
+  scons package "$@" || scons --clean
 fi
 
 echo
 echo ======================== uninstaller
 cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME"
-scons
+scons "$@"
 
 echo
 echo ======================== cbang
 cd "$CBANG_HOME"
-scons
+scons "$@"
 
 echo
 echo ======================== fah-viewer
 cd "$FAH_VIEWER_HOME"
-scons
-scons package
+scons "$@"
+scons package "$@"
 
 echo
 echo ======================== webclient
 cd "$FAH_WEB_CLIENT_HOME"
-scons
+scons "$@"
 
 echo
 echo ======================== libfah
-cd "$LIBFAH_HOME" && scons || true
+cd "$LIBFAH_HOME"
+scons "$@"
 
 echo
 echo ======================== fah-client
-cd "$FAH_CLIENT_HOME" && scons && scons package || true
+cd "$FAH_CLIENT_HOME"
+scons "$@"
+scons package "$@"
 
 echo
 echo ======================== installer
 cd "$FAH_CLIENT_OSX_INSTALLER_HOME"
-scons --clean
-scons
+scons "$@"
 
 echo
 echo "done"
