@@ -6,10 +6,10 @@ cd "$(dirname "$0")"
 
 cd "$CBANG_HOME" && scons --clean
 cd "$LIBFAH_HOME" && scons --clean
-cd "$FAH_VIEWER_HOME" && scons --clean && scons --clean package
-cd "$FAH_CLIENT_HOME" && scons --clean && scons --clean package
-cd "$FAH_CLIENT_BASTET_HOME" && scons --clean && scons --clean package
-cd "$FAH_CONTROL_HOME" && scons --clean && scons --clean package
+cd "$FAH_VIEWER_HOME" && scons -c package && scons -c
+cd "$FAH_CLIENT_HOME" && scons -c package && scons -c
+cd "$FAH_CLIENT_BASTET_HOME" && scons -c dist && scons -c package && scons -c
+cd "$FAH_CONTROL_HOME" && scons -c package && scons -c
 
 cd "$FAH_WEB_CLIENT_HOME" && scons --clean || true # partly fails
 rm -r "$FAH_WEB_CLIENT_HOME"/resources.{cpp,data,o}

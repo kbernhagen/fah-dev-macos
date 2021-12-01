@@ -63,11 +63,12 @@ git clone https://github.com/cdberkstresser/fah-control.git fah-control-gtk3
 echo && \
 git clone https://github.com/kbernhagen/fah-osx-installer.git
 
-echo
-echo "Trying to clone other repos...(may be private)"
-
 [[ ! -d fah-client-bastet ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/fah-client-bastet.git || true
+git clone https://github.com/FoldingAtHome/fah-client-bastet.git
+
+[[ ! -d fah-web-client-bastet ]] && \
+echo && \
+git clone https://github.com/FoldingAtHome/fah-web-client-bastet.git
 
 echo

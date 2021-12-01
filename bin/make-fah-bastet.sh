@@ -22,6 +22,7 @@ echo
 echo ======================== fah-client-bastet
 cd "$FAH_CLIENT_BASTET_HOME"
 scons "$@"
+scons dist "$@"
 scons package "$@"
 
 echo
