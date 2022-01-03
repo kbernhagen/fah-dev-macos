@@ -13,8 +13,8 @@ PFIX="$HOME/fah-local-10.7-universal"
 
 [ -f "$PFIX/lib/libfreetype.a" ] && exit 0
 
-F="freetype-2.10.4.tar.gz"
-D="freetype-2.10.4"
+F="freetype-2.11.1.tar.gz"
+D="freetype-2.11.1"
 
 cd "$FAH_DEV_ROOT/build"
 

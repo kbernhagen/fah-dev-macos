@@ -13,8 +13,8 @@ PFIX="$HOME/fah-local-10.7-universal"
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
-F="fftw-3.3.9.tar.gz"
-D="fftw-3.3.9"
+F="fftw-3.3.10.tar.gz"
+D="fftw-3.3.10"
 
 cd "$FAH_DEV_ROOT/build"
 
