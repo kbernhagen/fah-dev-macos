@@ -5,11 +5,12 @@ strict=1
 osx_min_ver = '10.7'
 compiler = 'clang'
 osx_archs = 'x86_64'
-cxxstd = 'c++14'
-ccflags = '-stdlib=libc++ -Wno-unused-local-typedefs'
+cxxstd = 'c++17'
+ccflags = '-stdlib=libc++'
 linkflags = '-stdlib=libc++'
 
 package_arch = 'x86_64'
+# ok to uncomment if only building fah v7
 #disable_local = 'libevent re2'
 
 sign_disable = 1

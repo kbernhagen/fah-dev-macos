@@ -2,15 +2,14 @@ sse3=1
 debug=0
 strict=1
 
-osx_min_ver = '10.7'
+osx_min_ver = '10.13'
 compiler = 'clang'
 osx_archs = 'arm64 x86_64'
-cxxstd = 'c++14'
-ccflags = '-stdlib=libc++ -Wno-unused-local-typedefs'
+cxxstd = 'c++17'
+ccflags = '-stdlib=libc++'
 linkflags = '-stdlib=libc++'
 
 package_arch = 'universal'
-#disable_local = 'libevent re2'
 
 sign_disable = 1
 sign_keychain = 'login.keychain'
