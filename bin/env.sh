@@ -45,8 +45,7 @@ fi
 if [ -f "$B-univ-$USER.py" ]; then
   export SCONS_OPTIONS_UNIV="$B-univ-$USER.py"
 fi
-# note that univ build requires patched cbang CPUID, libfah CPUIDTool
-export SCONS_OPTIONS="$SCONS_OPTIONS_INTEL"
+export SCONS_OPTIONS="$SCONS_OPTIONS_UNIV"
 
 
 # the keychain to unlock before build starts
