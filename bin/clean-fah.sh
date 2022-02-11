@@ -28,3 +28,11 @@ rm "$FAH_CLIENT_VERSION_HOME"/config/fah-client-version/__init__.pyc
 # other *.app instances interfere with install; cause app relocation
 rm -rf "$FAH_CONTROL_HOME/build"
 rm -rf "$FAH_VIEWER_HOME/FAHViewer.app"
+
+# always leftover; py3 scons ones are not compatible with py2 scons
+echo
+echo "Removing scons cruft"
+find "$BUILD_ROOT" -name .sconsign.dblite -print -delete
+
+echo
+echo "Done cleaning"
