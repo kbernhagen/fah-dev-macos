@@ -49,14 +49,9 @@ export SCONS_OPTIONS="$SCONS_OPTIONS_UNIV"
 
 
 # the keychain to unlock before build starts
-# for most ppl, login.keychain is correct
 KEYCHAIN="login.keychain"
-if [[ "$USER" = "buildbot" ]]; then
-  KEYCHAIN="developer.keychain"
-fi
-# FIXME ugly and does not handle python u'whatever' strings
 if [[ -f "$SCONS_OPTIONS" ]]; then
-  eval KEY2=$(echo `grep '^ *sign_keychain *=' "$SCONS_OPTIONS" |tail -n 1 |cut -d= -f2`)
+  KEY2=$(./scons_options_keychain.py)
   [[ ! -z "$KEY2" ]] && KEYCHAIN="$KEY2"
 fi
 export KEYCHAIN
