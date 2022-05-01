@@ -28,8 +28,10 @@ export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export RUN_DISTUTILS="/opt/local/bin/python"
 
 NCPU=$(sysctl -n hw.ncpu)
-[ $NCPU -gt 16 ] && NCPU=16
-[[ "$(uname -m)" = "arm64" ]] && NCPU=4
+if [[ "$(uname -m)" = "arm64" ]]; then
+  NN=$(sysctl -n hw.perflevel0.logicalcpu) || NN=$(($NCPU / 2))
+  NCPU=$NN
+fi
 export SCONS_JOBS=$NCPU
 
 export BUILD_ROOT="$FAH_DEV_ROOT/workarea"
