@@ -66,20 +66,10 @@ if [ ! -f "/usr/local/bin/pip2" ]; then
   echo
   echo "========================================"
   echo "/usr/local/bin/pip2 not found"
-  echo "unable to install scons, twisted, buildbot"
+  echo "unable to install buildbot and its dependencies"
   echo
 
 else
-
-  # install scons
-  if [ ! -f "$HOME/Library/Python/2.7/bin/scons" ]; then
-    echo
-    echo "========================================"
-    echo "installing scons..."
-    echo "pip2 install scons --user"
-    echo
-    pip2 install scons --user
-  fi
 
   # install twisted
   if [ ! -f "$HOME/Library/Python/2.7/bin/twistd" ]; then
@@ -109,6 +99,16 @@ else
     python2 setup.py install --user
   fi
 
+  # uninstall old scons
+  if [ -f "$HOME/Library/Python/2.7/bin/scons" ]; then
+    echo
+    echo "========================================"
+    echo "uninstalling old python2 scons..."
+    echo "pip2 uninstall --yes scons"
+    echo
+    pip2 uninstall --yes scons
+  fi
+
 fi
 
 
@@ -128,6 +128,15 @@ if [ ! -f "$HOME/Library/Python/$PY3V/bin/dockbot" ]; then
   python3 setup.py install --user
 fi
 
+# install scons
+if [ ! -f "$HOME/Library/Python/$PY3V/bin/scons" ]; then
+  echo
+  echo "========================================"
+  echo "installing scons..."
+  echo "pip3 install scons --user"
+  echo
+  pip3 install scons --user
+fi
 
 echo
 echo "done"
