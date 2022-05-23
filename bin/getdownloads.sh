@@ -22,9 +22,9 @@ echo freetype-2.11.1.tar.gz
 [ ! -f freetype-2.11.1.tar.gz ] && \
 curl -fsSLO https://download.savannah.gnu.org/releases/freetype/freetype-2.11.1.tar.gz
 
-echo openssl-1.1.1m.tar.gz
-[ ! -f openssl-1.1.1m.tar.gz ] && \
-curl -fsSLO https://www.openssl.org/source/openssl-1.1.1m.tar.gz
+echo openssl-1.1.1o.tar.gz
+[ ! -f openssl-1.1.1o.tar.gz ] && \
+curl -fsSLO https://www.openssl.org/source/openssl-1.1.1o.tar.gz
 
 # libpng is not needed
 # freetype is built --without-png
