@@ -19,14 +19,6 @@ git clone https://github.com/CauldronDevelopmentLLC/cbang.git
 echo && \
 git clone https://github.com/CauldronDevelopmentLLC/testHarness.git
 
-[[ ! -d dockbot ]] && \
-echo && \
-git clone https://github.com/CauldronDevelopmentLLC/dockbot.git
-
-[[ ! -d buildbot ]] && \
-echo && \
-git clone -b 0.7.10p2-jcoffland --depth=1 https://github.com/CauldronDevelopmentLLC/buildbot.git
-
 [[ ! -d fah-client-osx-installer ]] && \
 echo && \
 git clone https://github.com/FoldingAtHome/fah-client-osx-installer.git

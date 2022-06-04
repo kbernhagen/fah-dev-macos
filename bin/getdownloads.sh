@@ -14,10 +14,6 @@ echo
 echo "Downloading files if necessary..."
 echo
 
-echo python-2.7.18-macosx10.9.pkg
-[ ! -f python-2.7.18-macosx10.9.pkg ] && \
-curl -fsSLO https://www.python.org/ftp/python/2.7.18/python-2.7.18-macosx10.9.pkg
-
 echo freetype-2.11.1.tar.gz
 [ ! -f freetype-2.11.1.tar.gz ] && \
 curl -fsSLO https://download.savannah.gnu.org/releases/freetype/freetype-2.11.1.tar.gz
