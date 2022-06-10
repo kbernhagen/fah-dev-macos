@@ -75,7 +75,6 @@ export CBANG_HOME="$BUILD_ROOT/cbang"
 export FAH_CLIENT_HOME="$BUILD_ROOT/fah-client"
 export FAH_CLIENT_BASTET_HOME="$BUILD_ROOT/fah-client-bastet"
 
-export FAH_OSX_INSTALLER_HOME="$BUILD_ROOT/fah-osx-installer"
 export FAH_CLIENT_OSX_INSTALLER_HOME="$BUILD_ROOT/fah-client-osx-installer"
 export FAH_CLIENT_OSX_UNINSTALLER_HOME="$BUILD_ROOT/fah-client-osx-uninstaller"
 export FAH_CLIENT_VERSION_HOME="$BUILD_ROOT/fah-client-version"

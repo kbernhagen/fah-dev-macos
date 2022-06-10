@@ -26,9 +26,4 @@ scons dist "$@"
 scons package "$@"
 
 echo
-echo ======================== bastet installer
-cd "$FAH_OSX_INSTALLER_HOME"
-scons "$@"
-
-echo
 echo "done"

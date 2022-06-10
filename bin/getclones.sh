@@ -51,10 +51,6 @@ git clone https://github.com/FoldingCommunity/fah-viewer.git
 echo && \
 git clone https://github.com/cdberkstresser/fah-control.git fah-control-gtk3
 
-[[ ! -d fah-osx-installer ]] && \
-echo && \
-git clone https://github.com/kbernhagen/fah-osx-installer.git
-
 [[ ! -d fah-client-bastet ]] && \
 echo && \
 git clone https://github.com/FoldingAtHome/fah-client-bastet.git
