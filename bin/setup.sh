@@ -75,15 +75,32 @@ fi
 PY3VMINOR="`python3 --version | cut -d. -f2`"
 PY3V="3.$PY3VMINOR"
 
-# install scons
+echo
+echo "========================================"
+echo "pip3 install pip --user --upgrade"
+pip3 install pip --user --upgrade
+
 if [ ! -f "$HOME/Library/Python/$PY3V/bin/scons" ]; then
   echo
   echo "========================================"
-  echo "installing scons..."
   echo "pip3 install scons --user"
   echo
   pip3 install scons --user
 fi
+
+if [ ! -f "$HOME/Library/Python/$PY3V/bin/virtualenv" ]; then
+  echo
+  echo "========================================"
+  echo "pip3 install virtualenv --user"
+  echo
+  pip3 install virtualenv --user
+fi
+
+# six is used by cbang test
+echo
+echo "========================================"
+echo "pip3 install six --user --upgrade"
+pip3 install six --user --upgrade
 
 echo
 echo "done"

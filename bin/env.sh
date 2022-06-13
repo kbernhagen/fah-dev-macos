@@ -39,10 +39,10 @@ export PREBUILT_ROOT="$FAH_DEV_ROOT/prebuilt"
 
 
 B="$FAH_DEV_ROOT/etc/scons-options"
-export SCONS_OPTIONS_INTEL="$B.py"
+export SCONS_OPTIONS_V7="$B.py"
 export SCONS_OPTIONS_UNIV="$B-univ.py"
 if [ -f "$B-$USER.py" ]; then
-  export SCONS_OPTIONS_INTEL="$B-$USER.py"
+  export SCONS_OPTIONS_V7="$B-$USER.py"
 fi
 if [ -f "$B-univ-$USER.py" ]; then
   export SCONS_OPTIONS_UNIV="$B-univ-$USER.py"

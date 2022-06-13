@@ -11,7 +11,7 @@ linkflags = '-stdlib=libc++'
 
 package_arch = 'x86_64'
 # ok to uncomment if only building fah v7
-#disable_local = 'libevent re2'
+disable_local = 'libevent re2'
 
 sign_disable = 1
 sign_keychain = 'login.keychain'
