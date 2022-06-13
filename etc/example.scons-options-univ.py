@@ -1,3 +1,4 @@
+# scons options for fah v8
 sse3=1
 debug=1
 strict=1

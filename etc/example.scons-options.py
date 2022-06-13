@@ -1,3 +1,4 @@
+# scons options for fah v7
 sse3=1
 debug=1
 strict=1
@@ -10,7 +11,6 @@ ccflags = '-stdlib=libc++'
 linkflags = '-stdlib=libc++'
 
 package_arch = 'x86_64'
-# ok to uncomment if only building fah v7
 disable_local = 'libevent re2'
 
 sign_disable = 1
