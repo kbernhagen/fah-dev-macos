@@ -28,7 +28,7 @@ cd "$D"
 
 ./configure --disable-shared --prefix="$PFIX" \
   CFLAGS="-arch arm64 -arch x86_64 -std=c99" \
-  --without-png --enable-freetype-config
+  --without-png --enable-freetype-config --without-brotli
 make
 make install
 

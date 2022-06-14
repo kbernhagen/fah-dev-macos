@@ -67,6 +67,7 @@ export OTHER_ROOT_UNIV="$HOME/fah-local-10.7-universal"
 export OTHER_ROOT="$OTHER_ROOT_UNIV"
 
 export FREETYPE2_HOME="$OTHER_ROOT"
+export FREETYPE2_INCLUDE="$OTHER_ROOT/include/freetype2"
 export OPENSSL_HOME="$OTHER_ROOT"
 
 export PATH="$FREETYPE2_HOME/bin:$PATH"
