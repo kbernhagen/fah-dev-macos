@@ -15,7 +15,7 @@ cd "$FAH_WEB_CLIENT_HOME" && scons --clean || true # partly fails
 rm -r "$FAH_WEB_CLIENT_HOME"/resources.{cpp,data,o}
 rm -r "$FAH_WEB_CLIENT_HOME"/libfah-web-client-resources.a
 
-cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME" && scons --clean
+cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME" && scons -c package
 
 cd "$FAH_CLIENT_OSX_INSTALLER_HOME" && scons -c package
 
