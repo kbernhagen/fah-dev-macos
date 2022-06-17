@@ -17,11 +17,10 @@ rm -r "$FAH_WEB_CLIENT_HOME"/libfah-web-client-resources.a
 
 cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME" && scons --clean
 
-# don't delete final dist packages and zip files
-cd "$FAH_CLIENT_OSX_INSTALLER_HOME" && scons --clean
+cd "$FAH_CLIENT_OSX_INSTALLER_HOME" && scons -c package
 
-#cd "$FAH_CLIENT_VERSION_HOME"; scons --clean # no SConstruct
-rm "$FAH_CLIENT_VERSION_HOME"/config/fah-client-version/__init__.pyc
+cd "$FAH_CLIENT_VERSION_HOME" && rm config/fah-client-version/__init__.pyc
+cd "$FAH_CLIENT_VERSION_HOME" && rm -r config/fah-client-version/__pycache__
 
 # these are missed by scons --clean
 # other *.app instances interfere with install; cause app relocation
