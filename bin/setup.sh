@@ -103,6 +103,17 @@ echo "pip3 install six --user --upgrade"
 pip3 install six --user --upgrade
 
 echo
+echo "========================================"
+echo "build OpenMP"
+if $(type cmake &>/dev/null)
+then
+  "$FAH_DEV_ROOT"/bin/make-openmp.sh
+else
+  echo "Unable to build OpenMP because cmake was not found."
+  echo "OpenMP is only needed for building fah cores."
+fi
+
+echo
 echo "done"
 echo
 echo "You might want to append the following to .zprofile"

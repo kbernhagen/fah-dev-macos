@@ -1,3 +1,10 @@
+# This file must be used with "source ./env.sh" *from bash*
+# you cannot run it directly
+
+if [ "${BASH_SOURCE-}" = "$0" ]; then
+    echo "You must source this script: \$ source $0" >&2
+    exit 33
+fi
 
 # FAH_DEV_ROOT/bin/env.sh
 # for developer manual build
@@ -6,7 +13,8 @@ HERE="$PWD"
 
 if [ ! -f "./env.sh" ]; then
   echo "error: env.sh needs to be sourced as ./env.sh"
-else
+  exit 1
+fi
 
 # ASSUME we are ALWAYS sourced from fah-dev-root/bin
 # ". ./env.sh"
@@ -53,7 +61,7 @@ export SCONS_OPTIONS="$SCONS_OPTIONS_UNIV"
 # the keychain to unlock before build starts
 KEYCHAIN="login.keychain"
 if [[ -f "$SCONS_OPTIONS" ]]; then
-  KEY2=$(./scons_options_keychain.py)
+  KEY2=$("$FAH_DEV_ROOT/bin/scons_options_keychain.py")
   [[ ! -z "$KEY2" ]] && KEYCHAIN="$KEY2"
 fi
 export KEYCHAIN
@@ -88,5 +96,3 @@ export FAH_CONTROL_PREBUILT_HOME="$PREBUILT_ROOT/fah-control-prebuilt"
 export FAH_VIEWER_HOME="$BUILD_ROOT/fah-viewer"
 export FAH_WEB_CLIENT_HOME="$BUILD_ROOT/fah-web-client"
 export LIBFAH_HOME="$BUILD_ROOT/libfah"
-
-fi

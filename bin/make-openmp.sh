@@ -20,7 +20,10 @@ export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export LIBOMP_PREFIX="$HOME/fah-local-openmp"
 export CXXFLAGS="-faligned-new"
 
-[ -f "$LIBOMP_PREFIX/lib/libomp.a" ] && exit 0
+if [ -f "$LIBOMP_PREFIX/lib/libomp.a" ]; then
+  echo "\"$LIBOMP_PREFIX/lib/libomp.a\" already exists"
+  exit 0
+fi
 
 V="14.0.5"
 D0="openmp-${V}"
