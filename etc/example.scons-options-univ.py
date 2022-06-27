@@ -1,5 +1,4 @@
 # scons options for fah v8
-sse3=1
 debug=1
 strict=1
 
@@ -7,7 +6,7 @@ osx_min_ver = '10.13'
 compiler = 'clang'
 osx_archs = 'arm64 x86_64'
 cxxstd = 'c++17'
-ccflags = '-stdlib=libc++'
+cxxflags = '-stdlib=libc++'
 linkflags = '-stdlib=libc++'
 
 package_arch = 'universal'
