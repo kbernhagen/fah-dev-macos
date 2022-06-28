@@ -50,6 +50,7 @@ echo
 echo "building openmp for x86_64"
 export MACOSX_DEPLOYMENT_TARGET=10.14
 ctriple="x86_64-apple-darwin"
+export CCFLAGS="-arch x86_64"
 mkdir -p build && cd build
 cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
@@ -69,6 +70,7 @@ echo
 echo "building openmp for arm64"
 export MACOSX_DEPLOYMENT_TARGET=11.0
 ctriple="arm64-apple-darwin"
+export CCFLAGS="-arch arm64"
 # SAME prefix
 mkdir -p build && cd build
 cmake \
