@@ -18,7 +18,6 @@ fi
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export LIBOMP_PREFIX="$HOME/fah-local-openmp"
-export CXXFLAGS="-faligned-new"
 
 if [ -f "$LIBOMP_PREFIX/lib/libomp.a" ]; then
   echo "\"$LIBOMP_PREFIX/lib/libomp.a\" already exists"
@@ -38,9 +37,8 @@ cd "$FAH_DEV_ROOT/build"
 
 echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
 
+[ -d "$D0" ] && rm -rf "$D0"
 mkdir -p "$D0" && cd "$D0"
-[ -d "$D" ] && rm -r "$D"
-[ -d cmake ] && rm -r cmake
 
 echo "extracting $F"
 tar xf "../$F"
@@ -50,19 +48,20 @@ echo
 echo "building openmp for x86_64"
 export MACOSX_DEPLOYMENT_TARGET=10.14
 ctriple="x86_64-apple-darwin"
-export CCFLAGS="-arch x86_64"
 mkdir -p build && cd build
 cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
   -DCMAKE_C_COMPILER_TARGET=$ctriple \
   -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
+  -DCMAKE_C_FLAGS="-arch x86_64" \
+  -DCMAKE_CXX_FLAGS="-arch x86_64 -faligned-new" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
   ..
 make -j V=1
 make install
-cd .. && rm -r build
+cd .. && mv build build-$$-intel
 mv "$LIBOMP_PREFIX"/lib/libomp.a{,-x86_64}
 
 
@@ -70,20 +69,21 @@ echo
 echo "building openmp for arm64"
 export MACOSX_DEPLOYMENT_TARGET=11.0
 ctriple="arm64-apple-darwin"
-export CCFLAGS="-arch arm64"
 # SAME prefix
 mkdir -p build && cd build
 cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
   -DCMAKE_C_COMPILER_TARGET=$ctriple \
   -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
+  -DCMAKE_C_FLAGS="-arch arm64" \
+  -DCMAKE_CXX_FLAGS="-arch arm64 -faligned-new" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
   ..
 make -j V=1
 make install
-cd .. && rm -r build
+cd .. && mv build build-$$-arm
 mv "$LIBOMP_PREFIX"/lib/libomp.a{,-arm64}
 
 
@@ -97,4 +97,4 @@ echo "cleaning up"
 rm "$LIBOMP_PREFIX"/lib/libomp.a-{arm64,x86_64}
 cd "$FAH_DEV_ROOT/build"
 # rm source dir, but keep archive
-[ -d "$D0" ] && rm -rf "$D0"
+[ -d "$D0" ] && mv "$D0" ~/.Trash/$D0-$$
