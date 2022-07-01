@@ -2,9 +2,7 @@
 
 #  make-openmp.sh
 
-# TODO run in virtualenv so python is python3
-# TODO find/install llvm-lit for auto testing of build
-# Please put llvm-lit in your PATH, set OPENMP_LLVM_LIT_EXECUTABLE to its full path, or point OPENMP_LLVM_TOOLS_DIR to its directory.
+# TODO brew install lit
 
 cd "$(dirname "$0")"
 
@@ -24,18 +22,28 @@ if [ -f "$LIBOMP_PREFIX/lib/libomp.a" ]; then
   exit 0
 fi
 
-V="14.0.5"
+V="14.0.6"
 D0="openmp-${V}"
 D="openmp-${V}.src"
 F="${D}.tar.xz"
 URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-$V/$F"
-SHA256="1f74ede110ce1e2dc02fc163b04c4ce20dd49351407426e53292adbd4af6fdab"
+SHA256="4f731ff202add030d9d68d4c6daabd91d3aeed9812e6a5b4968815cfdff0eb1f"
 
 cd "$FAH_DEV_ROOT/build"
 
 [ ! -f "$F" ] && curl -fsSLO "$URL"
 
 echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
+
+if [ -d build-virtualenv ]; then
+  source build-virtualenv/bin/activate
+else
+  virtualenv build-virtualenv
+  source build-virtualenv/bin/activate
+  pip install pip --upgrade
+  pip install FileCheck
+  pip install not --no-deps
+fi
 
 [ -d "$D0" ] && rm -rf "$D0"
 mkdir -p "$D0" && cd "$D0"
@@ -53,11 +61,13 @@ cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
   -DCMAKE_C_COMPILER_TARGET=$ctriple \
   -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
-  -DCMAKE_C_FLAGS="-arch x86_64" \
-  -DCMAKE_CXX_FLAGS="-arch x86_64 -faligned-new" \
+  -DCMAKE_C_FLAGS="" \
+  -DCMAKE_CXX_FLAGS="-faligned-new" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
+  -DCMAKE_OSX_ARCHITECTURES="x86_64" \
+  -DCMAKE_CROSSCOMPILING=TRUE \
   ..
 make -j V=1
 make install
@@ -75,11 +85,13 @@ cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
   -DCMAKE_C_COMPILER_TARGET=$ctriple \
   -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
-  -DCMAKE_C_FLAGS="-arch arm64" \
-  -DCMAKE_CXX_FLAGS="-arch arm64 -faligned-new" \
+  -DCMAKE_C_FLAGS="" \
+  -DCMAKE_CXX_FLAGS="-faligned-new" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
+  -DCMAKE_OSX_ARCHITECTURES="arm64" \
+  -DCMAKE_CROSSCOMPILING=TRUE \
   ..
 make -j V=1
 make install
