@@ -18,7 +18,20 @@ if [ ! -z "$FAH_CONTROL_HOME" ]; then
   cd "$FAH_CONTROL_HOME"
   scons --clean
   # do not stop build if fah-control build fails
-  scons package "$@" || scons --clean
+  scons package "$@" || scons -c package && scons -c
+fi
+
+echo
+echo ======================== fah-control-prebuilt
+if [ ! -z "$FAH_CONTROL_PREBUILT_HOME" ]; then
+  if [ -d "$FAH_CONTROL_PREBUILT_HOME" ]; then
+    cd "$FAH_CONTROL_PREBUILT_HOME"
+    if [ ! -d build/pkg/root ]; then
+      if [ -f setup.sh ]; then
+        ./setup.sh
+      fi
+    fi
+  fi
 fi
 
 echo
@@ -47,6 +60,7 @@ echo
 echo ======================== libfah
 cd "$LIBFAH_HOME"
 scons "$@"
+scons test "$@"
 
 echo
 echo ======================== fah-client

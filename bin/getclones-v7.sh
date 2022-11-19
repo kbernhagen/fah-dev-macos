@@ -50,4 +50,10 @@ git clone https://github.com/FoldingCommunity/fah-viewer.git
 echo && \
 git clone https://github.com/cdberkstresser/fah-control.git fah-control-gtk3
 
+
+cd "$PREBUILT_ROOT"
+[[ ! -d fah-control-prebuilt ]] && \
+echo && \
+git clone https://github.com/kbernhagen/fah-control-prebuilt.git || true
+
 echo
