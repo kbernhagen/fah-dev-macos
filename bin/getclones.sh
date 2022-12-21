@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-. ./env.sh
+source ./env.sh
 
 mkdir -p "$BUILD_ROOT"
 cd "$BUILD_ROOT"

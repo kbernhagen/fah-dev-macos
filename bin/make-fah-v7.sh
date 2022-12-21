@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-. ./env.sh
+source ./env.sh
 
 # unlock keychain if not already unlocked
 security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \

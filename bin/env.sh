@@ -26,11 +26,9 @@ unset MACOSX_DEPLOYMENT_TARGET
 
 # use latest sdk; we expect 11.1 with Xcode 12.4
 # sdk 11 allows cross compiling on macos 10.15+, Xcode 12.2+
-# this could be in slavename/slave.sh, or ~/.zprofile
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
 # use macports python with py2gtk2, even if not in PATH
-# this could be in slavename/dockbot.json env
 # this can be simply "python" if the first python in path
 # is the one with py2app and py2gtk2
 export RUN_DISTUTILS="/opt/local/bin/python"

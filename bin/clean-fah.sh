@@ -2,7 +2,7 @@
 
 cd "$(dirname "$0")"
 
-. ./env.sh
+source ./env.sh
 
 cd "$CBANG_HOME" && scons --clean
 cd "$LIBFAH_HOME" && scons --clean

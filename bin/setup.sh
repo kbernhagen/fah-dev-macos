@@ -9,9 +9,6 @@ cd "$(dirname "$0")"
 cd ..
 export FAH_DEV_ROOT="$PWD"
 
-# disable pip version warning
-export PIP_DISABLE_PIP_VERSION_CHECK=1
-
 # TODO
 # sanity checks
 # check git ssh configured
@@ -27,8 +24,6 @@ echo "Creating directories"
 mkdir -p \
   "$FAH_DEV_ROOT"/{build,prebuilt,workarea} \
   "$HOME"/fah-local-10.7-universal
-#  "$HOME"/fah-local-10.7-x86_64
-#  "$HOME"/fah-local-11.0-arm64
 
 
 # do this after any rsync, which may also chmod
@@ -54,53 +49,15 @@ cp -p "$B/example.scons-options-univ.py" "$B/scons-options-univ-$USER.py"
 # get downloads, make static libs
 "$FAH_DEV_ROOT"/bin/make-libraries.sh
 
-
-if [ -f "/usr/local/bin/pip2" ]; then
-  # uninstall old scons
-  if [ -f "$HOME/Library/Python/2.7/bin/scons" ]; then
-    echo
-    echo "========================================"
-    echo "uninstalling old python2 scons..."
-    echo "pip2 uninstall --yes scons"
-    echo
-    echo "Note: Do NOT upgrade pip2, despite messages you may see."
-    echo "It will become incompatible with python2."
-    echo "Ignore deprecation warnings for python 2.7"
-    echo
-    pip2 uninstall --yes scons
-  fi
-fi
-
-# don't assume py 3.8
-PY3VMINOR="`python3 --version | cut -d. -f2`"
-PY3V="3.$PY3VMINOR"
-
-echo
-echo "========================================"
-echo "pip3 install pip --user --upgrade"
-pip3 install pip --user --upgrade
-
-if [ ! -f "$HOME/Library/Python/$PY3V/bin/scons" ]; then
-  echo
-  echo "========================================"
-  echo "pip3 install scons --user"
-  echo
-  pip3 install scons --user
-fi
-
-if [ ! -f "$HOME/Library/Python/$PY3V/bin/virtualenv" ]; then
-  echo
-  echo "========================================"
-  echo "pip3 install virtualenv --user"
-  echo
-  pip3 install virtualenv --user
-fi
+export PY3USERBIN="$(python3 -m site --user-base)/bin"
+export PATH="$PY3USERBIN:$PATH"
+hash -r
 
 # six is used by cbang test
 echo
 echo "========================================"
-echo "pip3 install six --user --upgrade"
-pip3 install six --user --upgrade
+echo "pip3 install --user --upgrade pip six scons"
+pip3 install --user --upgrade pip six scons
 
 echo
 echo "========================================"
@@ -119,7 +76,7 @@ echo
 echo "You might want to append the following to .zprofile"
 echo
 echo "export SDKROOT=\$(xcrun --sdk macosx --show-sdk-path)"
-echo "export PY3USERBIN=\"\$HOME/Library/Python/$PY3V/bin\""
+echo "export PY3USERBIN=\"\$(python3 -m site --user-base)/bin\""
 echo "export PATH=\"\$PY3USERBIN:\$PATH\""
 echo "export PATH=\"\$HOME/fah-local-10.7-universal/bin:\$PATH\""
 echo "export PATH=\"\$PATH:\$HOME/bin\""

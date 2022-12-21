@@ -4,7 +4,7 @@
 
 cd "$(dirname "$0")"
 
-. ./env.sh
+source ./env.sh
 
 D="$FAH_DEV_ROOT/build"
 mkdir -p "$D"

@@ -35,11 +35,13 @@ cd "$FAH_DEV_ROOT/build"
 
 echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
 
-if [ -d build-virtualenv ]; then
-  source build-virtualenv/bin/activate
+[ -d build-virtualenv ] && rm -r build-virtualenv
+
+if [ -d build-venv ]; then
+  source build-venv/bin/activate
 else
-  virtualenv build-virtualenv
-  source build-virtualenv/bin/activate
+  python3 -m venv build-venv
+  source build-venv/bin/activate
   pip install pip --upgrade
   pip install FileCheck
   pip install not --no-deps
