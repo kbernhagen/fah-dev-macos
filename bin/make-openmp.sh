@@ -35,13 +35,12 @@ cd "$FAH_DEV_ROOT/build"
 
 echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
 
-[ -d build-virtualenv ] && rm -r build-virtualenv
-
-if [ -d build-venv ]; then
-  source build-venv/bin/activate
+VENV="$HOME/.venv/fah-dev-macos-openmm"
+if [ -f "$VENV/bin/activate" ]; then
+  source "$VENV/bin/activate"
 else
-  python3 -m venv build-venv
-  source build-venv/bin/activate
+  python3 -m venv "$VENV"
+  source "$VENV/bin/activate"
   pip install pip --upgrade
   pip install FileCheck
   pip install not --no-deps

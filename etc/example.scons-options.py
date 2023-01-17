@@ -14,7 +14,6 @@ disable_local = 'libevent re2'
 
 sign_disable = 1
 sign_keychain = ''
-#sign_keychain = 'developer.jane.doe.keychain'
 sign_id_installer = 'Developer ID Installer: Jane Doe (C123456789)'
 sign_id_app = 'Developer ID Application: Jane Doe (C123456789)'
 sign_prefix = 'org.foldingathome.'

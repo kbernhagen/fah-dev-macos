@@ -28,8 +28,8 @@ echo ======================== core-tools
 cd "$LIBFAH_HOME"/../core-tools
 scons "$@"
 echo "cp coretool $HOME/bin"
-mkdir -p $HOME/bin
-cp coretool $HOME/bin
+mkdir -p "$HOME/bin"
+cp coretool "$HOME/bin"
 
 echo
 echo "done"

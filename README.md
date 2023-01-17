@@ -6,9 +6,8 @@ If you will be using private repos, you should move this repo to a directory
 Xcode 12.2+ and macOS 10.15.4+ are required.
 
 Run ``./bin/setup.sh`` to clone repos, build static libraries, install 
-scons, buildbot, virtualenv, six.
+scons, buildbot, six.
 If cmake exists, OpenMP is built.
-If pip2 exists, old python2 scons is uninstalled.
 This can take 30 minutes.
 
 Some private repos may be required to build the v7 client packages.
