@@ -22,4 +22,9 @@ scons dist "$@"
 scons package "$@"
 
 echo
+echo ======================== fah-web-client-bastet
+cd "$FAH_WEB_CLIENT_BASTET_HOME"
+scons dist "$@"
+
+echo
 echo "done"

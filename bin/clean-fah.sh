@@ -9,6 +9,7 @@ cd "$LIBFAH_HOME" && scons --clean
 cd "$FAH_VIEWER_HOME" && scons -c package && scons -c
 cd "$FAH_CLIENT_HOME" && scons -c package && scons -c
 cd "$FAH_CLIENT_BASTET_HOME" && scons -c dist && scons -c package && scons -c
+cd "$FAH_WEB_CLIENT_BASTET_HOME" && scons -c dist
 cd "$FAH_CONTROL_HOME" && scons -c package && scons -c
 [ ! -z "$FAH_CONTROL_PREBUILT_HOME" ] && cd "$FAH_CONTROL_PREBUILT_HOME" \
   && [ -f clean.sh ] && ./clean.sh
