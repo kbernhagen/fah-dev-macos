@@ -13,8 +13,8 @@ PFIX="$HOME/fah-local-10.7-universal"
 
 [ -f "$PFIX/lib/libssl.a" ] && exit 0
 
-F="openssl-1.1.1p.tar.gz"
-D="openssl-1.1.1p"
+D="openssl-1.1.1s"
+F="$D.tar.gz"
 
 cd "$FAH_DEV_ROOT/build"
 
