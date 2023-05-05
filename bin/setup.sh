@@ -80,7 +80,4 @@ echo "export PY3USERBIN=\"\$(python3 -m site --user-base)/bin\""
 echo "export PATH=\"\$PY3USERBIN:\$PATH\""
 echo "export PATH=\"\$HOME/fah-local-10.7-universal/bin:\$PATH\""
 echo "export PATH=\"\$PATH:\$HOME/bin\""
-if [ -f /opt/homebrew/bin/brew ]; then
-  echo "eval \"\$(/opt/homebrew/bin/brew shellenv)\""
-fi
 echo
