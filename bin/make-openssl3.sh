@@ -1,6 +1,10 @@
 #!/bin/bash -e
 
-#  make-openssl.sh
+#  make-openssl3.sh
+
+cd "$(dirname "$0")"
+
+source ./env.sh
 
 if [ -z "$FAH_DEV_ROOT" ]; then
   echo "FAH_DEV_ROOT is not defined"
@@ -13,12 +17,19 @@ PFIX="$HOME/fah-local-10.7-universal"
 
 [ -f "$PFIX/lib/libssl.a" ] && exit 0
 
-D="openssl-1.1.1s"
-F="$D.tar.gz"
+V="3.0.9"
+D="openssl-${V}"
+F="${D}.tar.gz"
+URL="https://www.openssl.org/source/$F"
+SHA256="eb1ab04781474360f77c318ab89d8c5a03abc38e63d65a603cabbf1b00a1dc90"
 
 cd "$FAH_DEV_ROOT/build"
 
-[ -d "$D" ] && rm -r "$D"
+[ ! -f "$F" ] && curl -fsSLO "$URL"
+
+echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
+
+[ -d "$D" ] && rm -rf "$D"
 
 echo "extracting $F"
 tar xzf "$F"
@@ -26,7 +37,7 @@ cd "$D"
 
 # make for x86_64
 echo "building openssl for x86_64"
-./Configure darwin64-x86_64-cc no-shared --prefix="$PFIX"
+./Configure darwin64-x86_64-cc no-shared no-legacy --prefix="$PFIX"
 make
 make test
 make install
@@ -35,12 +46,17 @@ make distclean
 mv "$PFIX"/bin/openssl{,-x86_64}
 mv "$PFIX"/lib/libcrypto.a{,-x86_64}
 mv "$PFIX"/lib/libssl.a{,-x86_64}
+#mv "$PFIX"/lib/ossl-modules/legacy.dylib{,-x86_64}
+
+if [ "$1" == "split" ]; then
+  mv "$PFIX" "$PFIX"-x86_64
+fi
 
 # make for arm64
 export MACOSX_DEPLOYMENT_TARGET=11.0
 # SAME prefix
 echo "building openssl for arm64"
-./Configure darwin64-arm64-cc no-shared --prefix="$PFIX"
+./Configure darwin64-arm64-cc no-shared no-legacy --prefix="$PFIX"
 make
 # can only test on arm
 if [ "$(uname -m)" == "arm64" ]; then
@@ -52,6 +68,12 @@ make distclean
 mv "$PFIX"/bin/openssl{,-arm64}
 mv "$PFIX"/lib/libcrypto.a{,-arm64}
 mv "$PFIX"/lib/libssl.a{,-arm64}
+#mv "$PFIX"/lib/ossl-modules/legacy.dylib{,-arm64}
+
+if [ "$1" == "split" ]; then
+  mv "$PFIX" "$PFIX"-arm64
+  exit
+fi
 
 # lipo universal
 echo "creating universal openssl via lipo"
@@ -67,10 +89,15 @@ echo "creating universal openssl via lipo"
  "$PFIX"/lib/libssl.a-{arm64,x86_64} \
  -output "$PFIX"/lib/libssl.a
 
+#/usr/bin/lipo -create \
+# "$PFIX"/lib/ossl-modules/legacy.dylib-{arm64,x86_64} \
+# -output "$PFIX"/lib/ossl-modules/legacy.dylib
+
 echo "cleaning up"
 rm "$PFIX"/bin/openssl-{arm64,x86_64}
 rm "$PFIX"/lib/libcrypto.a-{arm64,x86_64}
 rm "$PFIX"/lib/libssl.a-{arm64,x86_64}
+#rm "$PFIX"/lib/ossl-modules/legacy.dylib-{arm64,x86_64}
 cd ..
 # rm source dir, but keep tar.gz
 [ -d "$D" ] && rm -rf "$D"

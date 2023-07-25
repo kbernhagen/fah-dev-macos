@@ -4,7 +4,6 @@
 # setup fah-dev-macos for local development
 # partly shared with buildbot account setup
 
-
 cd "$(dirname "$0")"
 cd ..
 export FAH_DEV_ROOT="$PWD"
@@ -22,12 +21,7 @@ echo
 echo "Creating directories"
 
 mkdir -p \
-  "$FAH_DEV_ROOT"/{build,prebuilt,workarea} \
-  "$HOME"/fah-local-10.7-universal
-
-
-# do this after any rsync, which may also chmod
-chmod 0700 "$FAH_DEV_ROOT"
+  "$FAH_DEV_ROOT"/{build,prebuilt,workarea}
 
 
 # copy example.scons-options to scons-options-USER.py
@@ -45,9 +39,8 @@ cp -p "$B/example.scons-options-univ.py" "$B/scons-options-univ-$USER.py"
 # get git clones
 "$FAH_DEV_ROOT"/bin/getclones.sh
 
-
-# get downloads, make static libs
-"$FAH_DEV_ROOT"/bin/make-libraries.sh
+# make static libs
+"$FAH_DEV_ROOT"/bin/make-libraries-v8.sh
 
 export PY3USERBIN="$(python3 -m site --user-base)/bin"
 export PATH="$PY3USERBIN:$PATH"
@@ -78,6 +71,5 @@ echo
 echo "export SDKROOT=\$(xcrun --sdk macosx --show-sdk-path)"
 echo "export PY3USERBIN=\"\$(python3 -m site --user-base)/bin\""
 echo "export PATH=\"\$PY3USERBIN:\$PATH\""
-echo "export PATH=\"\$HOME/fah-local-10.7-universal/bin:\$PATH\""
 echo "export PATH=\"\$PATH:\$HOME/bin\""
 echo

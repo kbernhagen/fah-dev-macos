@@ -2,6 +2,10 @@
 
 #  make-fftw.sh
 
+cd "$(dirname "$0")"
+
+source ./env.sh
+
 if [ -z "$FAH_DEV_ROOT" ]; then
   echo "FAH_DEV_ROOT is not defined"
   exit 1
@@ -15,8 +19,14 @@ export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
 F="fftw-3.3.10.tar.gz"
 D="fftw-3.3.10"
+URL="https://www.fftw.org/$F"
+SHA256="56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467"
 
 cd "$FAH_DEV_ROOT/build"
+
+[ ! -f "$F" ] && curl -fsSLO "$URL"
+
+echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
 
 [ -d "$D" ] && rm -rf "$D"
 

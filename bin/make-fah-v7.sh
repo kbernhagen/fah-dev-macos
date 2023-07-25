@@ -8,9 +8,13 @@ source ./env.sh
 security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \
   security unlock-keychain "$KEYCHAIN"
 
-"$FAH_DEV_ROOT"/bin/getclones-v7.sh
+./getclones-v7.sh
+./getclones-private.sh
 
 export SCONS_OPTIONS="$SCONS_OPTIONS_V7"
+
+# build v7 static libs if absent
+./make-libraries.sh
 
 echo
 echo ======================== fah-control
