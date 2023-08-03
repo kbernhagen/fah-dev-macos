@@ -3,6 +3,7 @@
 cd "$(dirname "$0")"
 
 source ./env.sh
+source ./create-venv.sh
 
 cd "$CBANG_HOME" && scons --clean
 cd "$LIBFAH_HOME" && scons --clean
