@@ -10,6 +10,11 @@ security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \
   security unlock-keychain "$KEYCHAIN"
 
 echo
+echo ======================== fah-web-client-bastet
+cd "$FAH_WEB_CLIENT_BASTET_HOME"
+scons dist "$@"
+
+echo
 echo ======================== cbang
 cd "$CBANG_HOME"
 scons "$@"
@@ -21,11 +26,6 @@ cd "$FAH_CLIENT_BASTET_HOME"
 scons "$@"
 scons dist "$@"
 scons package "$@"
-
-echo
-echo ======================== fah-web-client-bastet
-cd "$FAH_WEB_CLIENT_BASTET_HOME"
-scons dist "$@"
 
 echo
 echo "done"
