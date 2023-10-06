@@ -12,7 +12,7 @@ security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \
 echo
 echo ======================== fah-web-client-bastet
 cd "$FAH_WEB_CLIENT_BASTET_HOME"
-scons dist "$@"
+scons dist "$@" || true
 
 echo
 echo ======================== cbang
