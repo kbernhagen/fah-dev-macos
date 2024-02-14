@@ -33,8 +33,9 @@ rm -rf "$FAH_VIEWER_HOME/FAHViewer.app"
 
 # always leftover; py3 scons ones are not compatible with py2 scons
 echo
-echo "Removing scons cruft"
+echo "Removing cruft"
 find "$BUILD_ROOT" -name .sconsign.dblite -print -delete
+find "$FAH_CLIENT_BASTET_HOME" -type f -name .DS_Store -print -delete
 
 echo
 echo "Done cleaning"
