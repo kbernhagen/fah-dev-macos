@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-VENV="$HOME/.venv/fah-build"
+VENV="$HOME/.venvs/fah-build"
 
 if [ -f "$VENV/bin/activate" ]; then
   source "$VENV/bin/activate"

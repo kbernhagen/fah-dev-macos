@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-VENV="$HOME/.venv/fah-dev-macos"
+VENV="$HOME/.venvs/fah-dev-macos"
 
 if [ -f "$VENV/bin/activate" ]; then
   source "$VENV/bin/activate"
