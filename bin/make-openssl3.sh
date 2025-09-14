@@ -17,11 +17,11 @@ PFIX="$HOME/fah-local-10.7-universal"
 
 [ -f "$PFIX/lib/libssl.a" ] && exit 0
 
-V="3.0.12"
+V="3.5.2"
 D="openssl-${V}"
 F="${D}.tar.gz"
-URL="https://www.openssl.org/source/$F"
-SHA256="f93c9e8edde5e9166119de31755fc87b4aa34863662f67ddfcba14d0b6b69b61"
+URL="https://github.com/openssl/openssl/releases/download/${D}/${F}"
+SHA256="c53a47e5e441c930c3928cf7bf6fb00e5d129b630e0aa873b08258656e7345ec"
 
 cd "$FAH_DEV_ROOT/build"
 
