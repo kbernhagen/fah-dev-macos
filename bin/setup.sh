@@ -41,19 +41,6 @@ cp -p "$B/example.scons-options-univ.py" "$B/scons-options-univ-$USER.py"
 # make static libs
 ./bin/make-libraries-v8.sh
 
-./bin/create-venv.sh
-
-echo
-echo "========================================"
-echo "build OpenMP"
-if $(type cmake &>/dev/null)
-then
-  ./bin/make-openmp.sh
-else
-  echo "Unable to build OpenMP because cmake was not found."
-  echo "OpenMP is only needed for building fah cores."
-fi
-
 echo
 echo "done"
 echo

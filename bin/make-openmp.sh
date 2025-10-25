@@ -35,7 +35,7 @@ cd "$FAH_DEV_ROOT/build"
 
 echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
 
-VENV="$HOME/.venv/fah-dev-macos-openmm"
+VENV="$HOME/.venvs/fah-dev-macos-openmm"
 if [ -f "$VENV/bin/activate" ]; then
   source "$VENV/bin/activate"
 else
