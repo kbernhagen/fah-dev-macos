@@ -8,9 +8,9 @@ if [ -z "$FAH_DEV_ROOT" ]; then
   exit 1
 fi
 
-PFIX="$HOME/fah-local-10.7-universal"
+PFIX="$HOME/fah-local-10.13"
 
-[ -f "$PFIX/lib/libfftw3f.a" ] && exit 0
+[ -f "$PFIX/lib/libfftw3f.a" ] && exit 0 || true
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
@@ -32,7 +32,7 @@ tar xzf "$F"
 cd "$D"
 
 # make for x86_64
-export MACOSX_DEPLOYMENT_TARGET=10.7
+export MACOSX_DEPLOYMENT_TARGET=10.13
 if [ ! -f "$PFIX/lib/libfftw3f.a" ]; then
   echo "building fftw for x86_64"
 

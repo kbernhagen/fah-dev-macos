@@ -8,16 +8,16 @@ echo "Cloning public repos..."
 
 [[ ! -d cbang ]] && \
 echo && \
-git clone https://github.com/CauldronDevelopmentLLC/cbang.git
+git clone https://github.com/CauldronDevelopmentLLC/cbang.git || true
 
 [[ ! -d fah-client-osx-uninstaller ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/fah-client-osx-uninstaller.git
+git clone https://github.com/FoldingAtHome/fah-client-osx-uninstaller.git || true
 
 [[ ! -d fah-client-bastet ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/fah-client-bastet.git
+git clone https://github.com/FoldingAtHome/fah-client-bastet.git || true
 
 [[ ! -d fah-web-client-bastet ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/fah-web-client-bastet.git
+git clone https://github.com/FoldingAtHome/fah-web-client-bastet.git || true

@@ -2,7 +2,7 @@
 #  make-openmp.sh
 # TODO brew install lit
 cd "$(dirname "$0")"
-1source ./env.sh
+source ./env.sh
 
 if ! type cmake &>/dev/null
 then
@@ -51,7 +51,7 @@ cd "$D"
 
 echo
 echo "building openmp for x86_64"
-export MACOSX_DEPLOYMENT_TARGET=10.14
+export MACOSX_DEPLOYMENT_TARGET=10.15
 ctriple="x86_64-apple-darwin"
 mkdir -p build && cd build
 cmake \

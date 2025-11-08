@@ -8,12 +8,12 @@ echo "Cloning private repos..."
 
 [[ ! -d libfah ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/libfah.git
+git clone https://github.com/FoldingAtHome/libfah.git || true
 
 [[ ! -d core-tools ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/core-tools.git
+git clone https://github.com/FoldingAtHome/core-tools.git || true
 
 [[ ! -d gromacs-core ]] && \
 echo && \
-git clone https://github.com/FoldingAtHome/gromacs-core.git
+git clone https://github.com/FoldingAtHome/gromacs-core.git || true

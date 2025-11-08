@@ -9,10 +9,10 @@ if [ -z "$FAH_DEV_ROOT" ]; then
 fi
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-export MACOSX_DEPLOYMENT_TARGET=10.7
-PFIX="$HOME/fah-local-10.7-universal"
+export MACOSX_DEPLOYMENT_TARGET=10.13
+PFIX="$HOME/fah-local-10.13"
 
-[ -f "$PFIX/lib/libssl.a" ] && exit 0
+[ -f "$PFIX/lib/libssl.a" ] && exit 0 || true
 
 V="3.5.2"
 D="openssl-${V}"

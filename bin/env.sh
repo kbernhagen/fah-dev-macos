@@ -48,7 +48,7 @@ export KEYCHAIN
 export BUILD_ROOT="$FAH_DEV_ROOT/workarea"
 
 # prefix for static libs openssl, fftw
-export OTHER_ROOT="$HOME/fah-local-10.7-universal"
+export OTHER_ROOT="$HOME/fah-local-10.13"
 
 export OPENSSL_HOME="$OTHER_ROOT"
 export CBANG_HOME="$BUILD_ROOT/cbang"

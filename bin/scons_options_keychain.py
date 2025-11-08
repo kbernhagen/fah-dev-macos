@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pylint: disable=invalid-name,bare-except,missing-module-docstring
 import os
 import importlib.machinery
 import importlib.util
@@ -10,5 +11,7 @@ try:
     mymodule = importlib.util.module_from_spec(spec)
     loader.exec_module(mymodule)
     key = mymodule.sign_keychain
-except: pass
-if key: print(key)
+except:  # noqa: E722
+    pass
+if key:
+    print(key)
