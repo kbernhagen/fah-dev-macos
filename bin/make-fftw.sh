@@ -1,9 +1,6 @@
 #!/bin/bash -e
-
 #  make-fftw.sh
-
 cd "$(dirname "$0")"
-
 source ./env.sh
 
 if [ -z "$FAH_DEV_ROOT" ]; then

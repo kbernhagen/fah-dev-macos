@@ -3,7 +3,7 @@
 Requires
 
 - Xcode 12.2+ and macOS 10.15.4+
-- [homebrew](https://brew.sh)
+- [Homebrew](https://brew.sh)
 - `brew install fileicon`
 
 Building web control archive also requires
@@ -57,9 +57,3 @@ To build the uninstaller package, run
     ./bin/make-fah-uninstaller.sh
 
 Signing and notarization have additional requirements not detailed here.
-
-More private repos are required to build the v7 client packages.
-
-Building v7 fah-control requires python2 gtk2, which was previously
-built via MacPorts.
-This is also not detailed here.

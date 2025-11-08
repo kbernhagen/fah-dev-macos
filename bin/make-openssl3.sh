@@ -1,9 +1,6 @@
 #!/bin/bash -e
-
-#  make-openssl3.sh
-
+# make-openssl3.sh
 cd "$(dirname "$0")"
-
 source ./env.sh
 
 if [ -z "$FAH_DEV_ROOT" ]; then

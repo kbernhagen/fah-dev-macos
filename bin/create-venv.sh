@@ -1,5 +1,4 @@
 #!/bin/bash -e
-
 VENV="$HOME/.venvs/fah-dev-macos"
 
 if [ -f "$VENV/bin/activate" ]; then
@@ -9,5 +8,5 @@ else
   python3 -m venv "$VENV"
   source "$VENV/bin/activate"
   pip3 install --upgrade pip
-  pip3 install six scons
+  pip3 install scons six
 fi

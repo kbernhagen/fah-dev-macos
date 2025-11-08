@@ -1,4 +1,5 @@
 # scons options for fah v8
+# pylint: disable=invalid-name,missing-module-docstring
 debug=1
 strict=1
 

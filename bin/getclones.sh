@@ -1,12 +1,8 @@
 #!/bin/bash -e
-
 cd "$(dirname "$0")"
-
 source ./env.sh
-
 mkdir -p "$BUILD_ROOT"
 cd "$BUILD_ROOT"
-
 echo
 echo "Cloning public repos..."
 
@@ -25,5 +21,3 @@ git clone https://github.com/FoldingAtHome/fah-client-bastet.git
 [[ ! -d fah-web-client-bastet ]] && \
 echo && \
 git clone https://github.com/FoldingAtHome/fah-web-client-bastet.git
-
-echo

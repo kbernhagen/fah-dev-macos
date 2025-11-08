@@ -1,12 +1,8 @@
 #!/bin/bash -e
-
 #  make-openmp.sh
-
 # TODO brew install lit
-
 cd "$(dirname "$0")"
-
-source ./env.sh
+1source ./env.sh
 
 if ! type cmake &>/dev/null
 then
@@ -75,7 +71,6 @@ make install
 cd .. && mv build build-$$-intel
 mv "$LIBOMP_PREFIX"/lib/libomp.a{,-x86_64}
 
-
 echo
 echo "building openmp for arm64"
 export MACOSX_DEPLOYMENT_TARGET=11.0
@@ -99,12 +94,10 @@ make install
 cd .. && mv build build-$$-arm
 mv "$LIBOMP_PREFIX"/lib/libomp.a{,-arm64}
 
-
 echo "creating universal openmp via lipo"
 /usr/bin/lipo -create \
  "$LIBOMP_PREFIX"/lib/libomp.a-{arm64,x86_64} \
  -output "$LIBOMP_PREFIX"/lib/libomp.a
-
 
 echo "cleaning up"
 rm "$LIBOMP_PREFIX"/lib/libomp.a-{arm64,x86_64}
