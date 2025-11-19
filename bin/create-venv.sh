@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 VENV="$HOME/.venvs/fah-dev-macos"
 
 if [ -f "$VENV/bin/activate" ]; then

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 # make-openssl3.sh
 cd "$(dirname "$0")"
 source ./env.sh
@@ -10,7 +10,7 @@ fi
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MACOSX_DEPLOYMENT_TARGET=10.13
-PFIX="$HOME/fah-local-10.13"
+PFIX="$OPENSSL_HOME"
 
 [ -f "$PFIX/lib/libssl.a" ] && exit 0 || true
 

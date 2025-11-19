@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 cd "$(dirname "$0")"
 source ./env.sh
 source ./create-venv.sh
@@ -6,8 +6,7 @@ source ./create-venv.sh
 security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \
   security unlock-keychain "$KEYCHAIN"
 echo
-echo ======================== uninstaller
-cd "$FAH_CLIENT_OSX_UNINSTALLER_HOME"
-scons package "$@"
+cd "$BUILD_ROOT"
+scons -C fah-client-osx-uninstaller package "$@"
 echo
 echo "done"

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 cd "$(dirname "$0")"
 source ./env.sh
 source ./create-venv.sh
@@ -7,23 +7,22 @@ source ./create-venv.sh
 security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \
   security unlock-keychain "$KEYCHAIN"
 
+cd "$BUILD_ROOT"
+
 echo
 echo ======================== fah-web-client-bastet
-cd "$FAH_WEB_CLIENT_BASTET_HOME"
-scons dist "$@" || true
+scons -C fah-web-client-bastet dist "$@" || true
 
 echo
 echo ======================== cbang
-cd "$CBANG_HOME"
-scons "$@"
-scons test "$@"
+scons -C cbang "$@"
+scons -C cbang test "$@"
 
 echo
 echo ======================== fah-client-bastet
-cd "$FAH_CLIENT_BASTET_HOME"
-scons "$@"
-scons dist "$@"
-scons package "$@"
+scons -C fah-client-bastet "$@"
+scons -C fah-client-bastet dist "$@"
+scons -C fah-client-bastet package "$@"
 
 echo
 echo "done"

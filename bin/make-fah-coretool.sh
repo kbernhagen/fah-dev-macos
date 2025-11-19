@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 cd "$(dirname "$0")"
 source ./env.sh
 source ./create-venv.sh
@@ -11,22 +11,21 @@ security unlock-keychain -p fake "$KEYCHAIN" >/dev/null 2>&1 || \
 ./getclones.sh
 ./getclones-private.sh
 
+cd "$BUILD_ROOT"
+
 echo
 echo ======================== cbang
-cd "$CBANG_HOME"
-scons "$@"
-scons test "$@"
+scons -C cbang "$@"
+scons -C cbang test "$@"
 
 echo
 echo ======================== libfah
-cd "$LIBFAH_HOME"
-scons "$@"
-scons test "$@"
+scons -C libfah "$@"
+scons -C libfah test "$@"
 
 echo
 echo ======================== core-tools
-cd "$BUILD_ROOT"/core-tools
-scons "$@"
+scons -C core-tools "$@"
 echo "cp coretool $HOME/bin"
 mkdir -p "$HOME/bin"
 cp coretool "$HOME/bin"

@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 # setup.sh
 # setup fah-dev-macos for local development
 # partly shared with buildbot worker account setup

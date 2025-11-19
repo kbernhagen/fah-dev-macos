@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 #  make-fftw.sh
 cd "$(dirname "$0")"
 source ./env.sh
@@ -8,7 +8,7 @@ if [ -z "$FAH_DEV_ROOT" ]; then
   exit 1
 fi
 
-PFIX="$HOME/fah-local-10.13"
+PFIX="$FFTW3_HOME"
 
 [ -f "$PFIX/lib/libfftw3f.a" ] && exit 0 || true
 

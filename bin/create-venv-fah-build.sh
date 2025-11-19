@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 VENV="$HOME/.venvs/fah-build"
 
 if [ -f "$VENV/bin/activate" ]; then

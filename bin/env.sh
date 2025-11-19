@@ -46,13 +46,8 @@ fi
 export KEYCHAIN
 
 export BUILD_ROOT="$FAH_DEV_ROOT/workarea"
-
-# prefix for static libs openssl, fftw
-export OTHER_ROOT="$HOME/fah-local-10.13"
-
-export OPENSSL_HOME="$OTHER_ROOT"
 export CBANG_HOME="$BUILD_ROOT/cbang"
-export FAH_CLIENT_BASTET_HOME="$BUILD_ROOT/fah-client-bastet"
-export FAH_WEB_CLIENT_BASTET_HOME="$BUILD_ROOT/fah-web-client-bastet"
-export FAH_CLIENT_OSX_UNINSTALLER_HOME="$BUILD_ROOT/fah-client-osx-uninstaller"
-export LIBFAH_HOME="$BUILD_ROOT/libfah"
+
+export OPENSSL_HOME="$HOME/fah-local-10.13"
+export FFTW3_HOME="$HOME/fah-local-10.13"
+export LIBOMP_HOME="$HOME/fah-local-openmp"

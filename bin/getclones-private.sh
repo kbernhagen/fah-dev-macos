@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 cd "$(dirname "$0")"
 source ./env.sh
 mkdir -p "$BUILD_ROOT"

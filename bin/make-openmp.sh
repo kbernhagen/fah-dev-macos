@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 #  make-openmp.sh
 # TODO brew install lit
 cd "$(dirname "$0")"
@@ -11,7 +11,7 @@ then
 fi
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-export LIBOMP_PREFIX="$HOME/fah-local-openmp"
+export LIBOMP_PREFIX="$LIBOMP_HOME"
 
 if [ -f "$LIBOMP_PREFIX/lib/libomp.a" ]; then
   echo "\"$LIBOMP_PREFIX/lib/libomp.a\" already exists"
