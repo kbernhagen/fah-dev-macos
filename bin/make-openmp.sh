@@ -1,12 +1,10 @@
-#!/bin/bash -eu
-#  make-openmp.sh
-# TODO brew install lit
-cd "$(dirname "$0")"
-source ./env.sh
+#!/bin/bash -eu -o pipefail
+echo
+echo "Building/installing static OpenMP into $LIBOMP_HOME"
 
 if ! type cmake &>/dev/null
 then
-  echo "error: cmake is not installed or not in PATH"
+  echo "error: cmake is not installed or not in PATH; cannot build openmp"
   exit 1
 fi
 
@@ -25,29 +23,26 @@ F="${D}.tar.xz"
 URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-$V/$F"
 SHA256="4f731ff202add030d9d68d4c6daabd91d3aeed9812e6a5b4968815cfdff0eb1f"
 
+mkdir -p "$FAH_DEV_ROOT/build"
 cd "$FAH_DEV_ROOT/build"
 
-[ ! -f "$F" ] && curl -fsSLO "$URL"
-
-echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
-
-VENV="$HOME/.venvs/fah-dev-macos-openmm"
-if [ -f "$VENV/bin/activate" ]; then
-  source "$VENV/bin/activate"
-else
-  python3 -m venv "$VENV"
-  source "$VENV/bin/activate"
-  pip install pip --upgrade
-  pip install FileCheck
-  pip install not --no-deps
+if [ ! -f "$F" ]; then
+  echo "downloading $F"
+  curl -fLO --remove-on-error "$URL"
 fi
 
-[ -d "$D0" ] && rm -rf "$D0"
+echo "verifying sha256"
+echo -n "$SHA256  $F" | shasum -a 256 -c || $(rm "$F" && exit 1)
+
+[ -d "$D0" ] && rm -rf "$D0" || true
 mkdir -p "$D0" && cd "$D0"
 
 echo "extracting $F"
 tar xf "../$F"
 cd "$D"
+
+uv pip install FileCheck lit
+uv pip install not --no-deps
 
 echo
 echo "building openmp for x86_64"
@@ -66,7 +61,7 @@ cmake \
   -DCMAKE_OSX_ARCHITECTURES="x86_64" \
   -DCMAKE_SYSTEM_NAME="Darwin" \
   ..
-make -j V=1
+make -j$SCONS_JOBS V=1
 make install
 cd .. && mv build build-$$-intel
 mv "$LIBOMP_PREFIX"/lib/libomp.a{,-x86_64}
@@ -89,7 +84,7 @@ cmake \
   -DCMAKE_OSX_ARCHITECTURES="arm64" \
   -DCMAKE_SYSTEM_NAME="Darwin" \
   ..
-make -j V=1
+make -j$SCONS_JOBS V=1
 make install
 cd .. && mv build build-$$-arm
 mv "$LIBOMP_PREFIX"/lib/libomp.a{,-arm64}
@@ -103,4 +98,4 @@ echo "cleaning up"
 rm "$LIBOMP_PREFIX"/lib/libomp.a-{arm64,x86_64}
 cd "$FAH_DEV_ROOT/build"
 # rm source dir, but keep archive
-[ -d "$D0" ] && mv "$D0" ~/.Trash/$D0-$$
+[ -d "$D0" ] && rm -rf "$D0" || true
