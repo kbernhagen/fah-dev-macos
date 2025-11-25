@@ -1,7 +1,8 @@
 #!/bin/bash -e
-[ -z "$NOTARIZE_PROFILE" ] \
-&& echo "error: NOTARIZE_PROFILE is not set" \
-&& exit 1
+if [ -z "$NOTARIZE_PROFILE" ]; then
+  echo "error: NOTARIZE_PROFILE is not set"
+  exit 1
+fi
 
 for item in "$@"; do
   echo
@@ -19,4 +20,3 @@ for item in "$@"; do
   echo "xcrun stapler staple \"$item\""
   xcrun stapler staple "$item" || echo "error: unable to staple \"$item\""
 done
-echo
