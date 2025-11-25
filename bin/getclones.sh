@@ -1,23 +1,15 @@
 #!/bin/bash -eu
 cd "$(dirname "$0")"
-source ./env.sh
 mkdir -p "$BUILD_ROOT"
 cd "$BUILD_ROOT"
 echo
-echo "Cloning public repos..."
-
-[[ ! -d cbang ]] && \
-echo && \
-git clone https://github.com/CauldronDevelopmentLLC/cbang.git || true
-
-[[ ! -d fah-client-osx-uninstaller ]] && \
-echo && \
-git clone https://github.com/FoldingAtHome/fah-client-osx-uninstaller.git || true
-
-[[ ! -d fah-client-bastet ]] && \
-echo && \
-git clone https://github.com/FoldingAtHome/fah-client-bastet.git || true
-
-[[ ! -d fah-web-client-bastet ]] && \
-echo && \
-git clone https://github.com/FoldingAtHome/fah-web-client-bastet.git || true
+echo "Cloning public repos into $BUILD_ROOT"
+for repo in cbang fah-client-bastet fah-web-client-bastet fah-client-osx-uninstaller
+do
+    if [ -d $repo ]; then
+        echo "skipping existing $repo"
+    else
+        echo
+        git clone "https://github.com/FoldingAtHome/$repo.git"
+    fi
+done

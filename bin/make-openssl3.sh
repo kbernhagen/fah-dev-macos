@@ -1,7 +1,9 @@
-#!/bin/bash -eu
+#!/bin/bash -eu -o pipefail
 # make-openssl3.sh
 cd "$(dirname "$0")"
-source ./env.sh
+
+echo
+echo "Building/installing static OpenSSL3 into $OPENSSL_HOME"
 
 if [ -z "$FAH_DEV_ROOT" ]; then
   echo "FAH_DEV_ROOT is not defined"
@@ -12,7 +14,10 @@ export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export MACOSX_DEPLOYMENT_TARGET=10.13
 PFIX="$OPENSSL_HOME"
 
-[ -f "$PFIX/lib/libssl.a" ] && exit 0 || true
+if [ -f "$PFIX/lib/libssl.a" ]; then
+  echo "\"$PFIX/lib/libssl.a\" already exists"
+  exit 0
+fi
 
 V="3.5.2"
 D="openssl-${V}"

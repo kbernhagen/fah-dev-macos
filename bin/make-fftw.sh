@@ -1,7 +1,9 @@
-#!/bin/bash -eu
+#!/bin/bash -eu -o pipefail
 #  make-fftw.sh
 cd "$(dirname "$0")"
-source ./env.sh
+
+echo
+echo "Building/installing static FFTW3 into $FFTW3_HOME"
 
 if [ -z "$FAH_DEV_ROOT" ]; then
   echo "FAH_DEV_ROOT is not defined"
@@ -10,7 +12,10 @@ fi
 
 PFIX="$FFTW3_HOME"
 
-[ -f "$PFIX/lib/libfftw3f.a" ] && exit 0 || true
+if [ -f "$PFIX/lib/libfftw3f.a" ]; then
+  echo "\"$PFIX/lib/libfftw3f.a\" already exists"
+  exit 0
+fi
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 

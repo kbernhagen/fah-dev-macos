@@ -1,19 +1,15 @@
 #!/bin/bash -eu
 cd "$(dirname "$0")"
-source ./env.sh
 mkdir -p "$BUILD_ROOT"
 cd "$BUILD_ROOT"
 echo
-echo "Cloning private repos..."
-
-[[ ! -d libfah ]] && \
-echo && \
-git clone https://github.com/FoldingAtHome/libfah.git || true
-
-[[ ! -d core-tools ]] && \
-echo && \
-git clone https://github.com/FoldingAtHome/core-tools.git || true
-
-[[ ! -d gromacs-core ]] && \
-echo && \
-git clone https://github.com/FoldingAtHome/gromacs-core.git || true
+echo "Cloning private repos into $BUILD_ROOT"
+for repo in libfah core-tools gromacs-core
+do
+    if [ -d "$repo" ]; then
+        echo "skipping existing $repo"
+    else
+        echo
+        git clone git@github.com:FoldingAtHome/$repo.git
+    fi
+done

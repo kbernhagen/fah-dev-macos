@@ -1,12 +1,10 @@
-#!/bin/bash -eu
+#!/bin/bash -eu -o pipefail
 #  make-openmp.sh
-# TODO brew install lit
 cd "$(dirname "$0")"
-source ./env.sh
 
 if ! type cmake &>/dev/null
 then
-  echo "error: cmake is not installed or not in PATH"
+  echo "error: cmake is not installed or not in PATH; cannot build openmp"
   exit 1
 fi
 
@@ -38,7 +36,7 @@ else
   python3 -m venv "$VENV"
   source "$VENV/bin/activate"
   pip install pip --upgrade
-  pip install FileCheck
+  pip install FileCheck lit
   pip install not --no-deps
 fi
 

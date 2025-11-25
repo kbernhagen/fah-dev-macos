@@ -14,7 +14,6 @@ Building cores also requires
 
 - access to private fah repos
 - macOS 12 and Xcode 14
-- `brew install lit`
 - cmake 3 <https://cmake.org/download/>
 
     Prepend `PATH` in ``~/.zprofile``
@@ -33,18 +32,18 @@ directory on an encrypted volume before running setup.sh.
 
 Run setup.sh to clone public repos into `workarea` directory
 and build static libraries.
-Setup can take 30 minutes.
+Setup can take 50 minutes.
 
     cd ~/fah-dev-macos
     ./bin/setup.sh
 
 If you intend to build cores, run
 
-    ./bin/make-openmp.sh
+    just build-openmp
  
 To build fah 8 (bastet), run
  
-    ./bin/clean-fah.sh && ./bin/make-fah-bastet.sh debug=1
+    just clean-fah && just build-fah debug=1
 
 A clean before build is needed to prevent problems when switching
 between debug and release builds.
@@ -54,6 +53,11 @@ They will never be auto updated, as `workarea` is for development.
 
 To build the uninstaller package, run
 
-    ./bin/make-fah-uninstaller.sh
+    just build-fah-uninstaller
 
 Signing and notarization have additional requirements not detailed here.
+
+To enable just auto complete, append to `~/.zshrc`
+```
+source <(just --completions zsh)
+```
