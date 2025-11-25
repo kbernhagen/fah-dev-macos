@@ -1,12 +1,13 @@
-#!/bin/bash -eu
+#!/bin/bash -eu -o pipefail
 #  make-openmp.sh
-# TODO brew install lit
 cd "$(dirname "$0")"
-source ./env.sh
+
+echo
+echo "Building/installing static OpenMP into $LIBOMP_HOME"
 
 if ! type cmake &>/dev/null
 then
-  echo "error: cmake is not installed or not in PATH"
+  echo "error: cmake is not installed or not in PATH; cannot build openmp"
   exit 1
 fi
 
@@ -25,6 +26,7 @@ F="${D}.tar.xz"
 URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-$V/$F"
 SHA256="4f731ff202add030d9d68d4c6daabd91d3aeed9812e6a5b4968815cfdff0eb1f"
 
+mkdir -p "$FAH_DEV_ROOT/build"
 cd "$FAH_DEV_ROOT/build"
 
 [ ! -f "$F" ] && curl -fsSLO "$URL"
@@ -38,7 +40,7 @@ else
   python3 -m venv "$VENV"
   source "$VENV/bin/activate"
   pip install pip --upgrade
-  pip install FileCheck
+  pip install FileCheck lit
   pip install not --no-deps
 fi
 
