@@ -1,7 +1,4 @@
 #!/bin/bash -eu -o pipefail
-# make-openssl3.sh
-cd "$(dirname "$0")"
-
 echo
 echo "Building/installing static OpenSSL3 into $OPENSSL_HOME"
 
@@ -41,7 +38,7 @@ cd "$D"
 # make for x86_64
 echo "building openssl for x86_64"
 ./Configure darwin64-x86_64-cc no-shared --prefix="$PFIX"
-make
+make -j$SCONS_JOBS
 make test
 make install
 make distclean
@@ -51,16 +48,18 @@ mv "$PFIX"/lib/libcrypto.a{,-x86_64}
 mv "$PFIX"/lib/libssl.a{,-x86_64}
 mv "$PFIX"/lib/ossl-modules/legacy.dylib{,-x86_64}
 
+set +u
 if [ "$1" == "split" ]; then
   mv "$PFIX" "$PFIX"-x86_64
 fi
+set -u
 
 # make for arm64
 export MACOSX_DEPLOYMENT_TARGET=11.0
 # SAME prefix
 echo "building openssl for arm64"
 ./Configure darwin64-arm64-cc no-shared --prefix="$PFIX"
-make
+make -j$SCONS_JOBS
 # can only test on arm
 if [ "$(uname -m)" == "arm64" ]; then
   make test
@@ -73,10 +72,12 @@ mv "$PFIX"/lib/libcrypto.a{,-arm64}
 mv "$PFIX"/lib/libssl.a{,-arm64}
 mv "$PFIX"/lib/ossl-modules/legacy.dylib{,-arm64}
 
+set +u
 if [ "$1" == "split" ]; then
   mv "$PFIX" "$PFIX"-arm64
   exit
 fi
+set -u
 
 # lipo universal
 echo "creating universal openssl via lipo"

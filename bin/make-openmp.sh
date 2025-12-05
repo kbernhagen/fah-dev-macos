@@ -1,7 +1,4 @@
 #!/bin/bash -eu -o pipefail
-#  make-openmp.sh
-cd "$(dirname "$0")"
-
 echo
 echo "Building/installing static OpenMP into $LIBOMP_HOME"
 

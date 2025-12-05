@@ -46,6 +46,10 @@ build-fah-uninstaller: unlock-keychain
 build-openssl:
     @./bin/make-openssl3.sh
 
+[private]
+build-openssl-split:
+    @./bin/make-openssl3.sh split
+
 build-fftw:
     @./bin/make-fftw.sh
 
