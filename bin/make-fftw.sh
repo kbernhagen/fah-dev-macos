@@ -1,13 +1,17 @@
 #!/bin/bash -eu -o pipefail
-echo
-echo "Building/installing static FFTW3 into $FFTW3_HOME"
-
-if [ -z "$FAH_DEV_ROOT" ]; then
-  echo "FAH_DEV_ROOT is not defined"
-  exit 1
-fi
 
 PFIX="$FFTW3_HOME"
+
+LTO=
+set +u
+if [ "$1" == "lto" ]; then
+  PFIX="$PFIX"-lto
+  LTO="-flto"
+fi
+set -u
+
+echo
+echo "Building/installing static FFTW3 into $PFIX"
 
 if [ -f "$PFIX/lib/libfftw3f.a" ]; then
   echo "\"$PFIX/lib/libfftw3f.a\" already exists"
@@ -51,7 +55,8 @@ if [ ! -f "$PFIX/lib/libfftw3f.a" ]; then
   # on arm64 host with macOS 26
   arch -x86_64 ./configure --host=x86_64-apple-darwin \
     --prefix="$PFIX" \
-    CFLAGS="-arch x86_64" \
+    CFLAGS="-arch x86_64 $LTO" \
+    LDFLAGS="$LTO" \
     --disable-alloca --with-our-malloc16 \
     --disable-shared --enable-static \
     --enable-threads --with-combined-threads \
@@ -73,7 +78,8 @@ if [ ! -f "$PFIX/lib/libfftw3f.a" ]; then
 
   ./configure --host=aarch64-apple-darwin \
     --prefix="$PFIX" \
-    CFLAGS="-arch arm64" \
+    CFLAGS="-arch arm64 $LTO" \
+    LDFLAGS="$LTO" \
     --disable-alloca --with-our-malloc16 \
     --disable-shared --enable-static \
     --enable-threads --with-combined-threads \

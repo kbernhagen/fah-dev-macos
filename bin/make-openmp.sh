@@ -1,6 +1,4 @@
 #!/bin/bash -eu -o pipefail
-echo
-echo "Building/installing static OpenMP into $LIBOMP_HOME"
 
 if ! type cmake &>/dev/null
 then
@@ -8,13 +6,25 @@ then
   exit 1
 fi
 
-export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 export LIBOMP_PREFIX="$LIBOMP_HOME"
+
+LTO=
+set +u
+if [ "$1" == "lto" ]; then
+  LIBOMP_PREFIX="$LIBOMP_PREFIX"-lto
+  LTO="-flto"
+fi
+set -u
+
+echo
+echo "Building/installing static OpenMP into $LIBOMP_HOME"
 
 if [ -f "$LIBOMP_PREFIX/lib/libomp.a" ]; then
   echo "\"$LIBOMP_PREFIX/lib/libomp.a\" already exists"
   exit 0
 fi
+
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
 V="14.0.6"
 D0="openmp-${V}"
@@ -53,8 +63,9 @@ cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
   -DCMAKE_C_COMPILER_TARGET=$ctriple \
   -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
-  -DCMAKE_C_FLAGS="" \
-  -DCMAKE_CXX_FLAGS="-faligned-new" \
+  -DCMAKE_C_FLAGS="$LTO" \
+  -DCMAKE_CXX_FLAGS="-faligned-new $LTO" \
+  -DCMAKE_LDFLAGS="$LTO" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
@@ -76,8 +87,9 @@ cmake \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
   -DCMAKE_C_COMPILER_TARGET=$ctriple \
   -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
-  -DCMAKE_C_FLAGS="" \
-  -DCMAKE_CXX_FLAGS="-faligned-new" \
+  -DCMAKE_C_FLAGS="$LTO" \
+  -DCMAKE_CXX_FLAGS="-faligned-new $LTO" \
+  -DCMAKE_LDFLAGS="$LTO" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \

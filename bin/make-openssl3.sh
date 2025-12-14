@@ -1,20 +1,16 @@
 #!/bin/bash -eu -o pipefail
-echo
-echo "Building/installing static OpenSSL3 into $OPENSSL_HOME"
 
-if [ -z "$FAH_DEV_ROOT" ]; then
-  echo "FAH_DEV_ROOT is not defined"
-  exit 1
-fi
-
-export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-export MACOSX_DEPLOYMENT_TARGET=10.13
 PFIX="$OPENSSL_HOME"
+
+echo
+echo "Building/installing static OpenSSL3 into $PFIX"
 
 if [ -f "$PFIX/lib/libssl.a" ]; then
   echo "\"$PFIX/lib/libssl.a\" already exists"
   exit 0
 fi
+
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
 V="3.5.2"
 D="openssl-${V}"
@@ -41,6 +37,7 @@ cd "$D"
 
 # make for x86_64
 echo "building openssl for x86_64"
+export MACOSX_DEPLOYMENT_TARGET=10.13
 ./Configure darwin64-x86_64-cc no-shared --prefix="$PFIX"
 make -j$SCONS_JOBS
 make test
@@ -59,9 +56,9 @@ fi
 set -u
 
 # make for arm64
-export MACOSX_DEPLOYMENT_TARGET=11.0
 # SAME prefix
 echo "building openssl for arm64"
+export MACOSX_DEPLOYMENT_TARGET=11.0
 ./Configure darwin64-arm64-cc no-shared --prefix="$PFIX"
 make -j$SCONS_JOBS
 # can only test on arm

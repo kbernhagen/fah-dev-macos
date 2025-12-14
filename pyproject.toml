@@ -1,6 +1,6 @@
 [project]
 name = "fah-dev-macos"
-version = "0.1.0"
+version = "0.1.1"
 description = "Folding@home Development Environment for macOS"
 license = "CC0-1.0"
 license-files = ["LICENSE"]

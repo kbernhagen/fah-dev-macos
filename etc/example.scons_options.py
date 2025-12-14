@@ -2,11 +2,12 @@
 # pylint: disable=invalid-name,missing-module-docstring
 debug=1
 
-osx_min_ver = '10.13'
 compiler = 'clang'
-osx_archs = 'arm64 x86_64'
 cxxstd = 'c++17'
 dist_build = '-%(mode)s'
+lto=0
+osx_archs = 'arm64 x86_64'
+osx_min_ver = '10.13'
 package_arch = 'universal'
 
 sign_disable = 1

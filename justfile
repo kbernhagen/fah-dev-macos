@@ -61,6 +61,12 @@ build-openmp:
 
 build-libraries: build-openssl build-fftw build-openmp
 
+# build fftw3 and openmp with LTO, openssl without
+build-libraries-lto:
+    @./bin/make-openssl3.sh
+    @./bin/make-fftw.sh lto
+    @uv run ./bin/make-openmp.sh lto
+
 getclones:
     #!/usr/bin/env python3
     import os
