@@ -19,8 +19,9 @@ export SCONS_OPTIONS := if env("SCONS_OPTIONS", "") == "" {
 } else {
     env("SCONS_OPTIONS")
 }
-# Default SIGN_KEYCHAIN to login.keychain if empty or unset
-export SIGN_KEYCHAIN := if env("SIGN_KEYCHAIN", "") == "" {
+# Only used for unlock-keychain.
+# Assume login.keychain if SIGN_KEYCHAIN is empty or unset
+KEYCHAIN := if env("SIGN_KEYCHAIN", "") == "" {
     "login.keychain"
 } else {
     env("SIGN_KEYCHAIN")
@@ -117,7 +118,8 @@ debug:
     @echo OPENSSL_HOME: {{OPENSSL_HOME}}
     @echo FFTW3_HOME: {{FFTW3_HOME}}
     @echo LIBOMP_HOME: {{LIBOMP_HOME}}
-    @echo SIGN_KEYCHAIN: {{SIGN_KEYCHAIN}}
+    @echo SIGN_KEYCHAIN: $SIGN_KEYCHAIN
+    @echo KEYCHAIN: {{KEYCHAIN}}
     @echo BUILD_ROOT: {{BUILD_ROOT}}
     @echo SCONS_JOBS: {{SCONS_JOBS}}
     @echo SCONS_OPTIONS: {{SCONS_OPTIONS}}
@@ -139,6 +141,6 @@ clean-fah:
 # Unlock macOS keychain
 unlock-keychain:
     @if [ "{{os()}}" = "macos" ]; then \
-        security unlock-keychain -p fake "{{SIGN_KEYCHAIN}}" >/dev/null 2>&1 \
-        || security unlock-keychain "{{SIGN_KEYCHAIN}}"; \
+        security unlock-keychain -p fake "{{KEYCHAIN}}" >/dev/null 2>&1 \
+        || security unlock-keychain "{{KEYCHAIN}}"; \
     fi
