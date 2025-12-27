@@ -29,6 +29,11 @@ KEYCHAIN := if env("SIGN_KEYCHAIN", "") == "" {
 
 help:
     @just --list --unsorted
+    @echo
+    @echo "Environment variables:"
+    @echo "    SIGN_KEYCHAIN: $SIGN_KEYCHAIN (default: login.keychain)"
+    @echo "    SCONS_JOBS: {{SCONS_JOBS}}"
+    @echo "    SCONS_OPTIONS: {{SCONS_OPTIONS}}"
 
 [positional-arguments]
 build-fah *ARGS: unlock-keychain
