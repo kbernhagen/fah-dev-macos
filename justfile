@@ -46,8 +46,10 @@ build-fah *ARGS: unlock-keychain
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-bastet dist "$@"
     @echo
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-bastet package "$@"
-    @echo
-    uv run scons -C "{{BUILD_ROOT}}"/fah-web-client-bastet dist "$@" || true
+
+[positional-arguments]
+build-fah-web-control *ARGS:
+    uv run scons -C "{{BUILD_ROOT}}"/fah-web-client-bastet dist "$@"
 
 build-fah-uninstaller: unlock-keychain
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-osx-uninstaller package
