@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Xcode 12.2+ and macOS 10.15.4+
+- macOS 15 and Xcode 26.3 (clang 17)
 - [Homebrew](https://brew.sh)
 - `brew install fileicon`
 
@@ -13,8 +13,7 @@ Building web control archive also requires
 Building cores also requires
 
 - access to private fah repos
-- macOS 12 and Xcode 14
-- cmake 3 <https://cmake.org/download/>
+- cmake 3.31.12 <https://cmake.org/files/v3.31/cmake-3.31.12-macos-universal.dmg>
 
     Prepend `PATH` in ``~/.zprofile``
 

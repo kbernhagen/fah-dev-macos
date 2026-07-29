@@ -26,12 +26,12 @@ fi
 
 export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
-V="14.0.6"
-D0="openmp-${V}"
-D="openmp-${V}.src"
+V="17.0.6"
+D0="llvm-project-${V}"
+D="llvm-project-${V}.src"
 F="${D}.tar.xz"
 URL="https://github.com/llvm/llvm-project/releases/download/llvmorg-$V/$F"
-SHA256="4f731ff202add030d9d68d4c6daabd91d3aeed9812e6a5b4968815cfdff0eb1f"
+SHA256="58a8818c60e6627064f312dbf46c02d9949956558340938b71cf731ad8bc0813"
 
 mkdir -p "$FAH_DEV_ROOT/build"
 cd "$FAH_DEV_ROOT/build"
@@ -53,61 +53,33 @@ cd "$D"
 
 uv pip install FileCheck lit
 uv pip install not --no-deps
+hash -r
 
 echo
-echo "building openmp for x86_64"
+echo "building openmp static universal library"
 export MACOSX_DEPLOYMENT_TARGET=10.15
-ctriple="x86_64-apple-darwin"
 mkdir -p build && cd build
-cmake \
+cmake ../runtimes \
+  -G "Unix Makefiles" \
   -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
-  -DCMAKE_C_COMPILER_TARGET=$ctriple \
-  -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DPACKAGE_VERSION="$V" \
+  -DLLVM_ENABLE_RUNTIMES=openmp \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
   -DCMAKE_C_FLAGS="$LTO" \
   -DCMAKE_CXX_FLAGS="-faligned-new $LTO" \
   -DCMAKE_LDFLAGS="$LTO" \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
+  -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
-  -DCMAKE_OSX_ARCHITECTURES="x86_64" \
-  -DCMAKE_SYSTEM_NAME="Darwin" \
-  ..
+  -DLIBOMP_OMPT_SUPPORT=OFF \
+  -DCMAKE_SYSTEM_NAME="Darwin"
 make -j$SCONS_JOBS V=1
 make install
-cd .. && mv build build-$$-intel
-mv "$LIBOMP_PREFIX"/lib/libomp.a{,-x86_64}
-
-echo
-echo "building openmp for arm64"
-export MACOSX_DEPLOYMENT_TARGET=11.0
-ctriple="arm64-apple-darwin"
-# SAME prefix
-mkdir -p build && cd build
-cmake \
-  -DCMAKE_INSTALL_PREFIX="$LIBOMP_PREFIX" \
-  -DCMAKE_C_COMPILER_TARGET=$ctriple \
-  -DCMAKE_CXX_COMPILER_TARGET=$ctriple \
-  -DCMAKE_C_FLAGS="$LTO" \
-  -DCMAKE_CXX_FLAGS="-faligned-new $LTO" \
-  -DCMAKE_LDFLAGS="$LTO" \
-  -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
-  -DLIBOMP_ENABLE_SHARED=OFF \
-  -DLIBOMP_INSTALL_ALIASES=OFF \
-  -DCMAKE_OSX_ARCHITECTURES="arm64" \
-  -DCMAKE_SYSTEM_NAME="Darwin" \
-  ..
-make -j$SCONS_JOBS V=1
-make install
-cd .. && mv build build-$$-arm
-mv "$LIBOMP_PREFIX"/lib/libomp.a{,-arm64}
-
-echo "creating universal openmp via lipo"
-/usr/bin/lipo -create \
- "$LIBOMP_PREFIX"/lib/libomp.a-{arm64,x86_64} \
- -output "$LIBOMP_PREFIX"/lib/libomp.a
 
 echo "cleaning up"
-rm "$LIBOMP_PREFIX"/lib/libomp.a-{arm64,x86_64}
 cd "$FAH_DEV_ROOT/build"
 # rm source dir, but keep archive
 [ -d "$D0" ] && rm -rf "$D0" || true
