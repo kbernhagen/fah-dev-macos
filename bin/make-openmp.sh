@@ -79,6 +79,12 @@ cmake ../runtimes \
 make -j$SCONS_JOBS V=1
 make install
 
+echo "creating include symlink"
+cd "$LIBOMP_PREFIX"
+if [ ! -d include ]; then
+  ln -s lib/clang/17/include .
+fi
+
 echo "cleaning up"
 cd "$FAH_DEV_ROOT/build"
 # rm source dir, but keep archive
