@@ -55,6 +55,8 @@ uv pip install FileCheck lit
 uv pip install not --no-deps
 hash -r
 
+SYSTEM_CLANG=$(xcrun --find clang)
+
 echo
 echo "building openmp static universal library"
 export MACOSX_DEPLOYMENT_TARGET=10.15
@@ -75,8 +77,26 @@ cmake ../runtimes \
   -DLIBOMP_ENABLE_SHARED=OFF \
   -DLIBOMP_INSTALL_ALIASES=OFF \
   -DLIBOMP_OMPT_SUPPORT=OFF \
+  -DOPENMP_TEST_C_COMPILER="$SYSTEM_CLANG" \
+  -DOPENMP_TEST_CXX_COMPILER="${SYSTEM_CLANG}++" \
+  -DOPENMP_TEST_COMPILER_FLAGS="-Xpreprocessor -fopenmp" \
+  -DLIBOMP_TEST_COMPILER="$SYSTEM_CLANG" \
+  -DLIBOMP_TEST_COMPILER_FLAGS="-Xpreprocessor -fopenmp" \
+  -DOPENMP_LLVM_LIT_EXECUTABLE=lit \
+  -DOPENMP_FILECHECK_EXECUTABLE=filecheck \
+  -DOPENMP_NOT_EXECUTABLE=not \
   -DCMAKE_SYSTEM_NAME="Darwin"
 make -j$SCONS_JOBS V=1
+
+# The test directory is usually generated at <build_dir>/runtimes/runtimes-bins/openmp/runtime/test
+# OR <build_dir>/openmp/runtime/test depending on exact cmake layout
+TEST_DIR="./runtimes/runtimes-bins/openmp/runtime/test"
+if [ ! -d "$TEST_DIR" ]; then
+    TEST_DIR="./openmp/runtime/test"
+fi
+echo "Running OpenMP tests in $TEST_DIR"
+lit -sv "$TEST_DIR"
+
 make install
 
 echo "creating include symlink"
