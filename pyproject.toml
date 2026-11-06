@@ -4,11 +4,11 @@ version = "0.2.0"
 description = "Folding@home Development Environment for macOS"
 license = "CC0-1.0"
 license-files = ["LICENSE"]
-requires-python = ">=3.13"
+requires-python = ">=3.15.2"
 dependencies = [
     "scons>=4.10.1",
     "six>=1.17.0",
 ]
 
 [tool.uv]
-required-version = ">=0.13.5"
+required-version = ">=0.13.6"
