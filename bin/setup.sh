@@ -36,6 +36,26 @@ if [ -f "etc/example.scons_options.py" -a ! -f "etc/scons_options.py" ]; then
     { set +x; } 2>/dev/null
 fi
 
+# co-authored by copilot
+echo
+echo "Checking certificate store..."
+CERT_CHECK_STATUS=0
+CERT_CHECK_OUTPUT="$(
+    {
+        openssl crl2pkcs7 -nocrl -certfile /etc/ssl/cert.pem |
+            openssl pkcs7 -print_certs -noout |
+            grep -E 'emSign ECC Root CA - G3|AAA Certificate Services'
+    } 2>&1
+)" || CERT_CHECK_STATUS=$?
+if [ "$CERT_CHECK_STATUS" -eq 0 ] || [ -n "$CERT_CHECK_OUTPUT" ]; then
+    echo "ERROR: Compromised certificates found or certificate check failed:"
+    printf '%s\n' "$CERT_CHECK_OUTPUT"
+    echo "See instructions at https://support.apple.com/en-us/1495550"
+    exit 1
+fi
+echo OK: no compromised certificates found
+echo
+
 "$JUST" getclones build-openssl
 echo
 echo "done"
