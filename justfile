@@ -1,5 +1,6 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
+export FAH_DEV_JUST := "1"
 export FAH_DEV_ROOT := justfile_dir()
 export BUILD_ROOT := justfile_dir() / "workarea"
 export SDKROOT := `xcrun --sdk macosx --show-sdk-path`
