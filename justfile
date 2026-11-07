@@ -156,7 +156,7 @@ clean:
     rm -rf .venv etc/__pycache__
     find . -type f -name '.DS_Store' -delete
 
-clean-fah:
+clean-fah: clean
     uv run scons -C "{{BUILD_ROOT}}"/cbang -c
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-bastet -c dist
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-bastet -c package
