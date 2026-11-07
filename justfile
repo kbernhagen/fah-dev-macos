@@ -1,5 +1,6 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
+export FAH_DEV_JUST := "1"
 export FAH_DEV_ROOT := justfile_dir()
 export BUILD_ROOT := justfile_dir() / "workarea"
 export SDKROOT := `xcrun --sdk macosx --show-sdk-path`
@@ -54,28 +55,47 @@ build-fah-web-control *ARGS:
 build-fah-uninstaller: unlock-keychain
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-osx-uninstaller package
 
-build-openssl:
+# check for compromised certificates (emSign ECC Root CA - G3 and AAA Certificate Services)
+check-certs:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    CERT_CHECK_STATUS=0
+    CERT_CHECK_OUTPUT="$(
+        {
+            openssl crl2pkcs7 -nocrl -certfile /etc/ssl/cert.pem |
+                openssl pkcs7 -print_certs -noout |
+                grep -E 'emSign ECC Root CA - G3|AAA Certificate Services'
+        } 2>&1
+    )" || CERT_CHECK_STATUS=$?
+    if [ "$CERT_CHECK_STATUS" -eq 0 ] || [ -n "$CERT_CHECK_OUTPUT" ]; then
+        echo "ERROR: Compromised certificates found or certificate check failed:"
+        printf '%s\n' "$CERT_CHECK_OUTPUT"
+        echo "See instructions at https://support.apple.com/en-us/1495550"
+        exit 1
+    fi
+
+build-openssl: check-certs
     @./bin/make-openssl3.sh
 
 [private]
-build-openssl-split:
+build-openssl-split: check-certs
     @./bin/make-openssl3.sh split
 
-build-fftw:
+build-fftw: check-certs
     @./bin/make-fftw.sh
 
-build-openmp:
+build-openmp: check-certs
     @uv run ./bin/make-openmp.sh
 
 build-libraries: build-openssl build-fftw build-openmp
 
 # build fftw3 and openmp with LTO, openssl without
-build-libraries-lto:
+build-libraries-lto: check-certs
     @./bin/make-openssl3.sh
     @./bin/make-fftw.sh lto
     @uv run ./bin/make-openmp.sh lto
 
-getclones:
+getclones: check-certs
     #!/usr/bin/env python3
     import os
     import subprocess
@@ -101,7 +121,7 @@ getclones:
         print(' '.join(cmd))
         subprocess.run(cmd, check=True)
 
-getclones-private:
+getclones-private: check-certs
     #!/usr/bin/env python3
     import os
     import subprocess
@@ -136,7 +156,7 @@ clean:
     rm -rf .venv etc/__pycache__
     find . -type f -name '.DS_Store' -delete
 
-clean-fah:
+clean-fah: clean
     uv run scons -C "{{BUILD_ROOT}}"/cbang -c
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-bastet -c dist
     uv run scons -C "{{BUILD_ROOT}}"/fah-client-bastet -c package

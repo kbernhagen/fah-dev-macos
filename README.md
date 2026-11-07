@@ -1,9 +1,26 @@
 # Scripts for FAH development on macOS
+## Important
+
+You MUST have patched security certificates prior to cloning this repo.
+If certificates are not patched, `curl`, `git`, and other tools may be compromised.
+You may need to re-apply patches whenever you install/upgrade macOS or Xcode.
+
+<https://support.apple.com/en-us/149555>
 
 ## Requirements
 
 - macOS 15 and Xcode 26.3 (clang 17)
+
+- Python 3.15.2+ from <https://www.python.org/downloads/macos/>
+
+    Do not use python 3.16, which is untested, is in alpha, and may be unpatched.
+
+- patched security certificates <https://support.apple.com/en-us/149555>
+
 - [Homebrew](https://brew.sh)
+
+    You MUST patch security certs before installing homebrew.
+
 - `brew install fileicon`
 
 Building web control archive also requires

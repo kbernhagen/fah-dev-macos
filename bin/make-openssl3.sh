@@ -1,4 +1,9 @@
 #!/bin/bash -eu -o pipefail
+if [[ "${FAH_DEV_JUST:-}" != "1" ]]; then
+    echo "ERROR: Run this script through just." >&2
+    echo "\"just build-openssl\" or \"just build-libraries\" will run this script"
+    exit 1
+fi
 
 PFIX="$OPENSSL_HOME"
 
