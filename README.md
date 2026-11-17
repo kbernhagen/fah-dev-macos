@@ -9,19 +9,23 @@ You may need to re-apply patches whenever you install/upgrade macOS or Xcode.
 
 ## Requirements
 
-- macOS 15 and Xcode 26.3 (clang 17)
+- macOS 15 (15.8.3+)
 
-- Python 3.15.2+ from <https://www.python.org/downloads/macos/>
+    Newer versions of macOS and Xcode may work, but your deployment target will need to be macOS 11.0.
 
-    Do not use python 3.16, which is untested, is in alpha, and may be unpatched.
+- Xcode 26.3 (clang 17) or just command line tools
+
+    `xcode-select --install`
 
 - patched security certificates <https://support.apple.com/en-us/149555>
 
+    They should already be patched for macOS 15.8.3, but you should verify.
+
 - [Homebrew](https://brew.sh)
 
-    You MUST patch security certs before installing homebrew.
+    You MUST have patched security certificates before installing homebrew.
 
-- `brew install fileicon`
+- `brew install fileicon python@3.15`
 
 Building web control archive also requires
 
@@ -36,6 +40,8 @@ Building cores also requires
 
     ``export PATH="/Applications/CMake.app/Contents/bin:$PATH"``
 
+    Make sure that this cmake is found before any that homebrew has installed.
+
 ## Installation
 
 Clone this repo to your home directory:
@@ -49,7 +55,7 @@ If you will be using private repos, you should move this repo to a
 directory on an encrypted volume before running setup.sh.
 
 Run setup.sh to clone public repos into `workarea` directory and build
-static openssl3. If not found, uv and just will be installed via pipx.
+static openssl3. If not found, uv/just will be installed via pipx/uv.
 
 Setup can take 30 minutes.
 
@@ -79,7 +85,12 @@ To build the uninstaller package, run
 
 Signing and notarization have additional requirements not detailed here.
 
-To enable just auto complete, append to `~/.zshrc`
+To enable uv and just auto complete, append to `~/.zshrc`
 ```
-source <(just --completions zsh)
+if command -v uv >/dev/null; then
+  source <(uv generate-shell-completion zsh)
+fi
+if command -v just >/dev/null; then
+  source <(just --completions zsh)
+fi
 ```
