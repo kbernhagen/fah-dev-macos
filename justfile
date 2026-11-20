@@ -1,5 +1,6 @@
 set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
 
+export UV_MANAGED_PYTHON := env("UV_MANAGED_PYTHON", "1")
 export FAH_DEV_JUST := "1"
 export FAH_DEV_ROOT := justfile_dir()
 export BUILD_ROOT := justfile_dir() / "workarea"
